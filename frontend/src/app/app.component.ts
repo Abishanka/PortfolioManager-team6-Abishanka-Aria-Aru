@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NetWorthComponent } from './net-worth/net-worth.component';
 
 @Component({
   selector: 'app-root',
