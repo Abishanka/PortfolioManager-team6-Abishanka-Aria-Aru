@@ -9,11 +9,17 @@ import { MatListModule } from '@angular/material/list';
 
 import { AppComponent } from './app.component';
 import { NetWorthComponent } from './net-worth/net-worth.component';
+import { MarketComponent } from './market/market.component';
+import { HoldingsComponent } from './holdings/holdings.component';
+import { InvestmentsComponent } from './investments/investments.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NetWorthComponent
+    NetWorthComponent,
+    MarketComponent,
+    HoldingsComponent,
+    InvestmentsComponent
   ],
   imports: [
     BrowserModule,
