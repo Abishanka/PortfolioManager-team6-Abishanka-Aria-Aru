@@ -9,7 +9,11 @@
       <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/investments/investments.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/investments/investments.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/investments/investments.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/investments/investments.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

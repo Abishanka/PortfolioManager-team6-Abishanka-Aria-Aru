@@ -6,6 +6,9 @@ import { HoldingsComponent } from './holdings/holdings.component';
 import { InvestmentsComponent } from './investments/investments.component';
 import { PerformanceGraphComponent } from './performance-graph/performance-graph.component';
 
+import { AgCharts } from 'ag-charts-angular';
+import { AgChartOptions } from 'ag-charts-community';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,10 +17,12 @@ NetWorthComponent,
 MarketComponent,
 HoldingsComponent,
 InvestmentsComponent,
-PerformanceGraphComponent],
+PerformanceGraphComponent,
+AgCharts],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'Portfolio Manager';
+
 }
