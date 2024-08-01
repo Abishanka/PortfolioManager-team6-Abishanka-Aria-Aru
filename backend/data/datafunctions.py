@@ -1,6 +1,9 @@
 import sqlite3
 import yfinance as yf
 
+db_conn = sqlite3.connect('portfolio.db')
+db_cursor = db_conn.cursor()
+
 # returns a dictionary of the relevant info needed for front end stock info 
 def get_stock_info(ticker):
     yf_ticker = yf.Ticker(ticker)
@@ -28,12 +31,43 @@ def get_stock_price_history(ticker, period):
     price_hist_df = yf_ticker.history(period=period)
     return price_hist_df['Close']
 
-
-db_conn = sqlite3.connect('portfolio.db')
-db_cursor = db_conn.cursor()
-
 def createdb():
-    pass
+    db_cursor.execute((
+        "CREATE TABLE transactions ("
+            "transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "transaction_type TEXT NOT NULL CHECK (transaction_type IN ('buy', 'sell')),"
+            "instrument_type TEXT NOT NULL CHECK (instrument_type IN ('stock', 'bond', 'cash')),"
+            "transaction_date DATE NOT NULL"
+        ");"
+    ))
+    db_cursor.execute((
+        "CREATE TABLE stocks ("
+            "stock_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "transaction_id INTEGER NOT NULL,"
+            "ticker TEXT NOT NULL,"
+            "volume INTEGER NOT NULL,"
+            "price DECIMAL(10, 2) NOT NULL,"
+            "FOREIGN KEY (transaction_id) REFERENCES transactions (transaction_id)"
+        ");"
+    ))
+    db_cursor.execute((
+        "CREATE TABLE bonds ("
+            "bond_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "transaction_id INTEGER NOT NULL,"
+            "name TEXT NOT NULL,"
+            "face_value DECIMAL(10, 2) NOT NULL,"
+            "interest_rate DECIMAL(5, 2) NOT NULL,"
+            "FOREIGN KEY (transaction_id) REFERENCES transactions (transaction_id)"
+        ");"
+    ))
+    db_cursor.execute((
+        "CREATE TABLE cash ("
+            "cash_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "transaction_id INTEGER NOT NULL,"
+            "amount DECIMAL(10, 2) NOT NULL,"
+            "FOREIGN KEY (transaction_id) REFERENCES transactions (transaction_id)"
+        ");"
+    ))
 
 def fetch_investment_summary():
     pass
