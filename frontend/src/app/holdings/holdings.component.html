@@ -1,1 +1,22 @@
-<p>holdings works!</p>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Shares Owned</th>
+            <th>Market Value</th>
+            <th>Current Price</th>
+            <th>Today's Returns</th>
+            <th>Total Return</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let stock of portfoliostocks">
+            <td>{{stock.ticker}}</td>
+            <td>{{stock.sharesowned}}</td>
+            <td>{{stock.mktval}}</td>
+            <td>{{stock.currprice}}</td>
+            <td>{{stock.todayreturn}}</td>
+            <td>{{stock.totalreturn}}</td>
+        </tr>
+    </tbody>
+</table>
