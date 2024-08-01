@@ -80,6 +80,11 @@ def createdb():
         amount DECIMAL(10, 2)
     );"""
     ))
+    # insert into holding table a cash row initialized to 0
+    f"""
+    INSERT INTO current_holdings (instrument_type, amount)
+    VALUES ('cash', 0);
+    """ 
 
 def fetch_investment_summary():
     pass
@@ -99,20 +104,103 @@ def fetch_stock_holdings():
 def fetch_bond_holding():
     pass
 
-def buy_stock():
+def buy_stock(ticker, num_shares, price):
+    # insert transaction into transaction table
+    f"""
+    INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
+    VALUES ('buy' ,'stock', DATE('now'));
+    """ 
+    # insert purchase into stocks table
+    f"""
+    INSERT INTO stocks (transaction_id, ticker, volume, price)
+    VALUES (last_inset_rowid() , '{ticker}', {num_shares}, {price});
+    """  
+    # insert row into holdings if row for ticker does not exist 
+    f"""
+    INSERT INTO current_holdings (instrument_type, ticker, number_of_shares, average_price_paid)
+    VALUES ('stock', '{ticker}', 0, 0)
+    WHERE NOT EXISTS (SELECT 1 FROM current_holdings WHERE ticker = '{ticker}');
+    """
+    # updates values in holding table 
+    f"""
+    UPDATE current_holdings
+    SET number_of_shares = {num_shares} + number_of_shares,
+        average_price_paid = ((number_of_shares*average_price_paid) + ({num_shares}*{price}))/({num_shares}+number_of_shares)
+    WHERE ticker = '{ticker}';
+    """
     pass
 
 def buy_bond():
     pass
 
-def sell_stock():
+def sell_stock(ticker, num_shares, price):
+    # insert transaction into transaction table
+    f"""
+    INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
+    VALUES ('sell' ,'stock', DATE('now'));
+    """ 
+    # insert sale into stocks table
+    f"""
+    INSERT INTO stocks (transaction_id, ticker, volume, price)
+    VALUES (last_inset_rowid() , '{ticker}', {num_shares}, {price});
+    """  
+    # updates values in holding table 
+    f"""
+    UPDATE current_holdings
+    SET number_of_shares = number_of_shares - {num_shares}
+    WHERE ticker = '{ticker}';
+    """
+    # removes row if no holding 
+    f"""
+    DELETE FROM current_holdings
+    WHERE number_of_shares = 0;
+    """
+    # update cash holding 
+    f"""
+    UPDATE current_holdings
+    SET amount = amount + ({num_shares} * {price})
+    WHERE instrument_type = cash;
+    """
+
     pass
 
 def sell_bond():
     pass
 
-def add_cash():
+def add_cash(amount):
+    # update cash in holdings 
+    f"""
+    UPDATE current_holdings
+    SET amount = amount + {amount}
+    WHERE instrument_type = 'cash';
+    """
+    # add to transaction table
+    f"""
+    INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
+    VALUES ('buy' ,'cash', DATE('now'));
+    """ 
+    # add to cash table 
+    f"""
+    INSERT INTO cash (transaction_id, amount)
+    VALUES (last_inset_rowid(), {amount});
+    """ 
     pass
 
-def remove_cash():
+def remove_cash(amount):
+    # update cash in holdings 
+    f"""
+    UPDATE current_holdings
+    SET amount = amount - {amount}
+    WHERE instrument_type = 'cash';
+    """
+    # add to transaction table
+    f"""
+    INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
+    VALUES ('sell' ,'cash', DATE('now'));
+    """ 
+    # add to cash table 
+    f"""
+    INSERT INTO cash (transaction_id, amount)
+    VALUES (last_inset_rowid(), {amount});
+    """ 
     pass
