@@ -11,7 +11,7 @@ describe('PerformanceGraphComponent', () => {
       imports: [PerformanceGraphComponent]
     })
     .compileComponents();
-
+    
     fixture = TestBed.createComponent(PerformanceGraphComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
