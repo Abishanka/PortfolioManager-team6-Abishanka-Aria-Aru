@@ -1,4 +1,17 @@
-.col-6{
+.ag-charts-canvas-center
+{
+display: inline-block;
+}
 
+.column{
+width: 33%;
+display: flex;
+margin:0;
+padding: 0;
+float: left;
+}
 
+.row{
+width: 100%;
+display: flex;
 }
