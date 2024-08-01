@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Update_at_8_1_2024_5_41_PM_[Changes]" date="1722534085755" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_1_2024_5_41_PM_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 8/1/2024 5:41 PM [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="frontend/public/favicon.ico" />
+    <option name="AFTER_PATH" value="frontend/src/favicon.ico" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_1_2024_5_41_PM_[Changes]/favicon.ico" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="node_modules/yfinance/LICENSE" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+</changelist>

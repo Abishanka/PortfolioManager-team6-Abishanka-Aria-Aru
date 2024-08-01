@@ -6,11 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="da32bf1f-609c-4316-8676-e91d8c3a0078" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/investments/investments.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/investments/investments.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/investments/investments.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/investments/investments.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/holdings/holdings.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/holdings/holdings.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/investment-graph/investment-graph.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/investment-graph/investment-graph.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/investment-graph/investment-graph.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/investment-graph/investment-graph.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/page/page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/page/page.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/page/page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/page/page.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/performance-graph/performance-graph.component.ts" afterDir="false" />
@@ -32,17 +37,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/javaaru&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Administrator/Desktop/frontend/src/app",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "two.files.diff.last.used.folder": "C:/Users/Administrator/Desktop/frontend/src/app"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
