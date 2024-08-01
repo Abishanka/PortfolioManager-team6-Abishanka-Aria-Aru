@@ -68,6 +68,18 @@ def createdb():
             "FOREIGN KEY (transaction_id) REFERENCES transactions (transaction_id)"
         ");"
     ))
+    db_cursor.execute(("""
+    CREATE TABLE current_holdings (
+        holding_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        instrument_type TEXT NOT NULL CHECK (instrument_type IN ('stock', 'bond', 'cash')),
+        ticker TEXT,
+        name TEXT,
+        number_of_shares INTEGER,
+        average_price_paid DECIMAL(10, 2),
+        face_value DECIMAL(10, 2),
+        amount DECIMAL(10, 2)
+    );"""
+    ))
 
 def fetch_investment_summary():
     pass
