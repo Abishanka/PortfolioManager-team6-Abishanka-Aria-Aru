@@ -1,7 +1,18 @@
-<table>
+<form>
+	<div class="mb-3 row">
+		<label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label>
+		<div class="col-xs-3 col-sm-auto">
+			<input id="table-filtering-search" class="form-control" type="text" [formControl]="filter" />
+		</div>
+	</div>
+</form>
+
+<table class="table table-striped">
     <thead>
         <tr>
+            <th>#</th>
             <th>Name</th>
+            <th>Ticker</th>
             <th>Shares Owned</th>
             <th>Market Value</th>
             <th>Current Price</th>
@@ -10,144 +21,22 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor = "let stock of portfoliostocks">
-            <td>{{stock.ticker}}</td>
-            <td>{{stock.sharesowned}}</td>
-            <td>{{stock.mktval}}</td>
-            <td>{{stock.currprice}}</td>
-            <td>{{stock.todayreturn}}</td>
-            <td>{{stock.totalreturn}}</td>
-        </tr>
+        @for (instrument of portfolioinstruments$ | async; track instrument.name; let i = $index) {
+            <tr>
+                <td>{{i+1}}</td>
+                <td>{{instrument.name}}</td>
+                <td>{{instrument.ticker}}</td>
+                <td>{{instrument.sharesOwned}}</td>
+                <td>{{instrument.marketValue}}</td>
+                <td>{{instrument.currentPrice}}</td>
+                <td [ngClass]="{'negativeReturnTbl': instrument.todaysReturns < 0, 'positiveReturnTbl': instrument.todaysReturns >= 0}">{{instrument.todaysReturns}}</td>
+                <td [ngClass]="{'negativeReturnTbl': instrument.totalReturn < 0, 'positiveReturnTbl': instrument.totalReturn >= 0}">{{instrument.totalReturn}}</td>
+            </tr>
+        }
+        @empty {
+            <tr>
+                <td colspan="8" style="text-align: center">No instruments found</td>
+            </tr>
+        }
     </tbody>
 </table>
-
-
-
-<!--<h2>Holding</h2>-->
-<!--<div class="table-responsive small">-->
-<!--  <table class="table table-striped table-sm">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--      <th scope="col">#</th>-->
-<!--      <th scope="col">Header</th>-->
-<!--      <th scope="col">Header</th>-->
-<!--      <th scope="col">Header</th>-->
-<!--      <th scope="col">Header</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr>-->
-<!--      <td>1,001</td>-->
-<!--      <td>random</td>-->
-<!--      <td>data</td>-->
-<!--      <td>placeholder</td>-->
-<!--      <td>text</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,002</td>-->
-<!--      <td>placeholder</td>-->
-<!--      <td>irrelevant</td>-->
-<!--      <td>visual</td>-->
-<!--      <td>layout</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,003</td>-->
-<!--      <td>data</td>-->
-<!--      <td>rich</td>-->
-<!--      <td>dashboard</td>-->
-<!--      <td>tabular</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,003</td>-->
-<!--      <td>information</td>-->
-<!--      <td>placeholder</td>-->
-<!--      <td>illustrative</td>-->
-<!--      <td>data</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,004</td>-->
-<!--      <td>text</td>-->
-<!--      <td>random</td>-->
-<!--      <td>layout</td>-->
-<!--      <td>dashboard</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,005</td>-->
-<!--      <td>dashboard</td>-->
-<!--      <td>irrelevant</td>-->
-<!--      <td>text</td>-->
-<!--      <td>placeholder</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,006</td>-->
-<!--      <td>dashboard</td>-->
-<!--      <td>illustrative</td>-->
-<!--      <td>rich</td>-->
-<!--      <td>data</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,007</td>-->
-<!--      <td>placeholder</td>-->
-<!--      <td>tabular</td>-->
-<!--      <td>information</td>-->
-<!--      <td>irrelevant</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,008</td>-->
-<!--      <td>random</td>-->
-<!--      <td>data</td>-->
-<!--      <td>placeholder</td>-->
-<!--      <td>text</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,009</td>-->
-<!--      <td>placeholder</td>-->
-<!--      <td>irrelevant</td>-->
-<!--      <td>visual</td>-->
-<!--      <td>layout</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,010</td>-->
-<!--      <td>data</td>-->
-<!--      <td>rich</td>-->
-<!--      <td>dashboard</td>-->
-<!--      <td>tabular</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,011</td>-->
-<!--      <td>information</td>-->
-<!--      <td>placeholder</td>-->
-<!--      <td>illustrative</td>-->
-<!--      <td>data</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,012</td>-->
-<!--      <td>text</td>-->
-<!--      <td>placeholder</td>-->
-<!--      <td>layout</td>-->
-<!--      <td>dashboard</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,013</td>-->
-<!--      <td>dashboard</td>-->
-<!--      <td>irrelevant</td>-->
-<!--      <td>text</td>-->
-<!--      <td>visual</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,014</td>-->
-<!--      <td>dashboard</td>-->
-<!--      <td>illustrative</td>-->
-<!--      <td>rich</td>-->
-<!--      <td>data</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td>1,015</td>-->
-<!--      <td>random</td>-->
-<!--      <td>tabular</td>-->
-<!--      <td>information</td>-->
-<!--      <td>text</td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--  </table>-->
-<!--</div>-->

@@ -18,15 +18,33 @@
   </div>
 
 <!--  a containter for 3 features that will be static-->
-  <div class="container px-4 py-5" id="static-info">
-    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+<!--  <div class ="  flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 " id="static-info">-->
+<!--    <div class="row g-4 row-cols-1 row-cols-lg-3">-->
+<!--      <div class="feature col">-->
+<!--        <h6 style="display: block; text-align: center;">My Portfolio Overview</h6>-->
+<!--      </div>-->
+<!--      <div class="feature col">-->
+<!--        <h6 style="display: block; text-align: center;">Available Funds: $15,000.02</h6>      </div>-->
+<!--      <div class="feature col button-center"  style="display: flex; align-items: center;-->
+<!--  justify-content: center;">-->
+<!--        <button>-->
+<!--          Manage Funds-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+
+
+  <div class ="container py-1" id="static-info">
+    <div class="row g-4 row-cols-1 row-cols-lg-3">
       <div class="feature col">
-        <label style="display: block; text-align: center;">My Portfolio Overview</label>
+        <h6 style="display: block; text-align: left;">My Portfolio Overview</h6>
       </div>
       <div class="feature col">
-        <label style="display: block; text-align: center;">Available Funds</label>      </div>
+        <h6 style="display: block; text-align: center;">Available Funds: $15,000.02</h6>      </div>
       <div class="feature col button-center"  style="display: flex; align-items: center;
-  justify-content: center;">
+  justify-content: right;">
         <button>
           Manage Funds
         </button>
@@ -34,9 +52,10 @@
     </div>
 
   </div>
-<!--  a container for 2 graphs and market overview-->
-  <div class="container px-4 py-5" id="3-graphs">
-    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+
+  <!--  a container for 2 graphs and market overview-->
+  <div class="container py-4" id="3-graphs">
+    <div class="row g-4  row-cols-1 row-cols-lg-3">
       <div class="feature col">
         <app-performance-graph></app-performance-graph>
       </div>
@@ -49,9 +68,9 @@
     </div>
 
   </div>
-
-
-
+  <div class="container py-5">
+    <app-holdings></app-holdings>
+  </div>
 </div>
 
 
