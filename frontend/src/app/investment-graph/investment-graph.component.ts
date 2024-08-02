@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { group } from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
 import { AgCharts } from 'ag-charts-angular';
 import { AgChartOptions } from 'ag-charts-community';
+import { InvestmentGraphDataService } from '../investment-graph-data.service'
 
 @Component({
   selector: 'app-investment-graph',
@@ -9,34 +11,39 @@ import { AgChartOptions } from 'ag-charts-community';
   templateUrl: './investment-graph.component.html',
   styleUrl: './investment-graph.component.css'
 })
+
 export class InvestmentsComponent {
-public chartOptions: AgChartOptions;
-constructor() {
-    this.chartOptions = {
-      data: [{ asset: "Stocks", amount: 60000 },
-    { asset: "Bonds", amount: 40000 },
-    { asset: "Cash", amount: 7000 },
-    ],
-      title: {
-        text: "Portfolio Composition",
-      },
-      series: [
-        {
-          type: "donut",
-          calloutLabelKey: "asset",
-          angleKey: "amount",
-          innerRadiusRatio: 0.8,
-          innerLabels: [
-                      {
-                          text: 'Total Investments: \n $100,000',
-                          spacing: 4,
-                          fontSize: 10,
-                          color: 'black',
-                      },
-          ],
+public chartOptions!: AgChartOptions;
+constructor(private graphDataService: InvestmentGraphDataService) {}
+ngOnInit() {
+  this.graphDataService.getGraphData().subscribe(data => {
+      this.chartOptions = {
+        data: [
+          { asset: "Stocks", amount: data.stock },
+          { asset: "Bonds", amount: data.bond },
+          { asset: "Cash", amount: data.cash },
+        ],
+        title: {
+          text: "Portfolio Composition",
         },
-      ],
-    };
-  }
+        series: [
+          {
+            type: "donut",
+            calloutLabelKey: "asset",
+            angleKey: "amount",
+            innerRadiusRatio: 0.8,
+            innerLabels: [
+              {
+                  text: 'Total Investments: \n $100,000',
+                  spacing: 4,
+                  fontSize: 10,
+                  color: 'black',
+              },
+            ],
+          },
+        ],
+      };
+    }
+  )};
 }
 
