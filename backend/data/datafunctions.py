@@ -114,6 +114,13 @@ def fetch_last_transaction(table):
     results = db_cursor.fetchone()
     return results 
 
+def fetch_current_holdings():
+    db_cursor.execute(f"""
+        SELECT * FROM current_holdings
+        """)
+    results = db_cursor.fetchall()
+    return results 
+
 def buy_stock(ticker, num_shares, price):
     # insert transaction into transaction table
     db_cursor.execute(f"""
