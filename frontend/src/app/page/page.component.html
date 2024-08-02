@@ -2,6 +2,9 @@
   <link href="./page.component.css" rel="stylesheet">
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css" />
 </head>
 <div>
 
@@ -17,25 +20,8 @@
     </div>
   </div>
 
-<!--  a containter for 3 features that will be static-->
-<!--  <div class ="  flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 " id="static-info">-->
-<!--    <div class="row g-4 row-cols-1 row-cols-lg-3">-->
-<!--      <div class="feature col">-->
-<!--        <h6 style="display: block; text-align: center;">My Portfolio Overview</h6>-->
-<!--      </div>-->
-<!--      <div class="feature col">-->
-<!--        <h6 style="display: block; text-align: center;">Available Funds: $15,000.02</h6>      </div>-->
-<!--      <div class="feature col button-center"  style="display: flex; align-items: center;-->
-<!--  justify-content: center;">-->
-<!--        <button>-->
-<!--          Manage Funds-->
-<!--        </button>-->
-<!--      </div>-->
-<!--    </div>-->
 
-<!--  </div>-->
-
-
+<!--static-->
   <div class ="container py-1" id="static-info">
     <div class="row g-4 row-cols-1 row-cols-lg-3">
       <div class="feature col">
@@ -68,9 +54,18 @@
     </div>
 
   </div>
+
+<!--  holdings-->
   <div class="container py-5">
     <app-holdings></app-holdings>
   </div>
+<!--  test modal-->
+    <div class="container-fluid">
+      <ngbd-modal-component></ngbd-modal-component>
+    </div>
+
+
+
 </div>
 
 
