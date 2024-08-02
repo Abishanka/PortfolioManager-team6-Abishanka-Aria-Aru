@@ -1,40 +1,57 @@
+<head>
+  <link href="./page.component.css" rel="stylesheet">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+</head>
+<div>
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2">Portfolio Manager</h1>
-  <div class="btn-toolbar mb-2 mb-md-0">
-    <div class="btn-group me-2">
-      <button type="button" class="btn btn-sm btn-outline-secondary">Overview</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary">Stocks</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary">Bonds</button>
+<!--  nav bar-->
+  <div class ="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Portfolio Manager</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group-lg me-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary">Overview</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">Stocks</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">Bonds</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="container-fluid py-3">
-  <div class="row my-3">
-    <div class="col">
-      <label>My Portfolio Overview</label>
+<!--  a containter for 3 features that will be static-->
+  <div class="container px-4 py-5" id="static-info">
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="feature col">
+        <label style="display: block; text-align: center;">My Portfolio Overview</label>
+      </div>
+      <div class="feature col">
+        <label style="display: block; text-align: center;">Available Funds</label>      </div>
+      <div class="feature col button-center"  style="display: flex; align-items: center;
+  justify-content: center;">
+        <button>
+          Manage Funds
+        </button>
+      </div>
     </div>
-    <div class="col">
-      <label>Available Funds</label>
-    </div>
-    <div class="col">
-      <button> Manage Funds </button>
-    </div>
+
   </div>
-  <div class="row my-3">
-    <div class="col">
-      <app-performance-graph></app-performance-graph>
+<!--  a container for 2 graphs and market overview-->
+  <div class="container px-4 py-5" id="3-graphs">
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="feature col">
+        <app-performance-graph></app-performance-graph>
+      </div>
+      <div class="feature col">
+        <app-investment-graph></app-investment-graph>
+      </div>
+      <div class="feature col">
+        <app-market-overview></app-market-overview>
+      </div>
     </div>
-    <div class="col">
-      <app-investment-graph></app-investment-graph>
-    </div>
-    <div class="col">
-      <app-market-overview></app-market-overview>
-    </div>
+
   </div>
   <div>
     <app-holdings></app-holdings>
   </div>
 </div>
+
 

@@ -81,10 +81,12 @@ def createdb():
     );"""
     ))
     # insert into holding table a cash row initialized to 0
-    f"""
+    db_cursor.execute(f"""
     INSERT INTO current_holdings (instrument_type, amount)
     VALUES ('cash', 0);
-    """ 
+    """ )
+    db_cursor.commit()
+    
 
 def fetch_investment_summary():
     pass
@@ -106,28 +108,32 @@ def fetch_bond_holding():
 
 def buy_stock(ticker, num_shares, price):
     # insert transaction into transaction table
-    f"""
+    db_cursor.execute(f"""
     INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
     VALUES ('buy' ,'stock', DATE('now'));
-    """ 
+    """ )
+    db_cursor.commit()
     # insert purchase into stocks table
-    f"""
+    db_cursor.execute(f"""
     INSERT INTO stocks (transaction_id, ticker, volume, price)
     VALUES (last_inset_rowid() , '{ticker}', {num_shares}, {price});
-    """  
+    """  )
+    db_cursor.commit()
     # insert row into holdings if row for ticker does not exist 
-    f"""
+    db_cursor.execute(f"""
     INSERT INTO current_holdings (instrument_type, ticker, number_of_shares, average_price_paid)
     VALUES ('stock', '{ticker}', 0, 0)
     WHERE NOT EXISTS (SELECT 1 FROM current_holdings WHERE ticker = '{ticker}');
-    """
+    """)
+    db_cursor.commit()
     # updates values in holding table 
-    f"""
+    db_cursor.execute(f"""
     UPDATE current_holdings
     SET number_of_shares = {num_shares} + number_of_shares,
         average_price_paid = ((number_of_shares*average_price_paid) + ({num_shares}*{price}))/({num_shares}+number_of_shares)
     WHERE ticker = '{ticker}';
-    """
+    """)
+    db_cursor.commit()
     pass
 
 def buy_bond():
@@ -135,32 +141,37 @@ def buy_bond():
 
 def sell_stock(ticker, num_shares, price):
     # insert transaction into transaction table
-    f"""
+    db_cursor.execute(f"""
     INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
     VALUES ('sell' ,'stock', DATE('now'));
-    """ 
+    """ )
+    db_cursor.commit()
     # insert sale into stocks table
-    f"""
+    db_cursor.execute(f"""
     INSERT INTO stocks (transaction_id, ticker, volume, price)
     VALUES (last_inset_rowid() , '{ticker}', {num_shares}, {price});
-    """  
+    """  )
+    db_cursor.commit()
     # updates values in holding table 
-    f"""
+    db_cursor.execute(f"""
     UPDATE current_holdings
     SET number_of_shares = number_of_shares - {num_shares}
     WHERE ticker = '{ticker}';
-    """
+    """)
+    db_cursor.commit()
     # removes row if no holding 
-    f"""
+    db_cursor.execute(f"""
     DELETE FROM current_holdings
     WHERE number_of_shares = 0;
-    """
+    """)
+    db_cursor.commit()
     # update cash holding 
-    f"""
+    db_cursor.execute(f"""
     UPDATE current_holdings
     SET amount = amount + ({num_shares} * {price})
     WHERE instrument_type = cash;
-    """
+    """)
+    db_cursor.commit()
 
     pass
 
@@ -169,38 +180,44 @@ def sell_bond():
 
 def add_cash(amount):
     # update cash in holdings 
-    f"""
+    db_cursor.execute(f"""
     UPDATE current_holdings
     SET amount = amount + {amount}
     WHERE instrument_type = 'cash';
-    """
+    """)
+    db_cursor.commit()
     # add to transaction table
-    f"""
+    db_cursor.execute(f"""
     INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
     VALUES ('buy' ,'cash', DATE('now'));
-    """ 
+    """ )
+    db_cursor.commit()
     # add to cash table 
-    f"""
+    db_cursor.execute(f"""
     INSERT INTO cash (transaction_id, amount)
     VALUES (last_inset_rowid(), {amount});
-    """ 
+    """ )
+    db_cursor.commit()
     pass
 
 def remove_cash(amount):
     # update cash in holdings 
-    f"""
+    db_cursor.execute(f"""
     UPDATE current_holdings
     SET amount = amount - {amount}
     WHERE instrument_type = 'cash';
-    """
+    """)
+    db_cursor.commit()
     # add to transaction table
-    f"""
+    db_cursor.execute(f"""
     INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
     VALUES ('sell' ,'cash', DATE('now'));
-    """ 
+    """ )
+    db_cursor.commit()
     # add to cash table 
-    f"""
+    db_cursor.execute(f"""
     INSERT INTO cash (transaction_id, amount)
     VALUES (last_inset_rowid(), {amount});
-    """ 
+    """ )
+    db_cursor.commit()
     pass
