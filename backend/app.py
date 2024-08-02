@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask_cors import CORS, cross_origin
 from data import datafunctions as data_func
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/portfoliooverview')
 def portfolio_overview():
@@ -9,25 +11,30 @@ def portfolio_overview():
 
 @app.route('/currentholdingssum')
 def current_holdings_sum():
-    current_holdings = data_func.fetch_current_holdings
-    # current holdings is tuple (holding_id, instrument_type, ticker, name, number_of_shares, average_price_paid, face_value, amount)
-    stocks_sum = 0
-    bonds_sum = 0 
-    cash_sum = 0
-    for entry in current_holdings:
-        match entry[1]:
-            case 'cash':
-                cash_sum += entry[7]
-            case 'bonds':
-                bond_sum += entry[7]
-            case 'stocks':
-                stocks_sum += (entry[4]*entry[5])
-            case _:
-                pass
+    # current_holdings = data_func.fetch_current_holdings
+    # # current holdings is tuple (holding_id, instrument_type, ticker, name, number_of_shares, average_price_paid, face_value, amount)
+    # stocks_sum = 0
+    # bonds_sum = 0 
+    # cash_sum = 0
+    # for entry in current_holdings:
+    #     match entry[1]:
+    #         case 'cash':
+    #             cash_sum += entry[7]
+    #         case 'bonds':
+    #             bond_sum += entry[7]
+    #         case 'stocks':
+    #             stocks_sum += (entry[4]*entry[5])
+    #         case _:
+    #             pass
+    # return ({
+    #     'cash': cash_sum,
+    #     'bond': bonds_sum,
+    #     'stock': stocks_sum
+    # })
     return ({
-        'cash': cash_sum,
-        'bonds': bonds_sum,
-        'stocks': stocks_sum
+        'cash': 900,
+        'bond': 300,
+        'stock': 40
     })
 
 
@@ -103,4 +110,4 @@ def search_equity():
     return jsonify()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

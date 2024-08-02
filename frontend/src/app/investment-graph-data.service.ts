@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class InvestmentGraphDataService { 
-  private apiUrl = 'https://';
+  private apiUrl = 'http://127.0.0.1:5000/currentholdingssum';
   constructor(private http: HttpClient) {}
   getGraphData(): Observable<any> {
     return this.http.get<any>(this.apiUrl);

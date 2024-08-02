@@ -13,10 +13,16 @@ import { InvestmentGraphDataService } from '../investment-graph-data.service'
 })
 
 export class InvestmentsComponent {
-public chartOptions!: AgChartOptions;
+public chartOptions: AgChartOptions = {
+  data: [],
+  series: []
+};
 constructor(private graphDataService: InvestmentGraphDataService) {}
 ngOnInit() {
   this.graphDataService.getGraphData().subscribe(data => {
+      console.log(data.stock)
+      console.log(data.bond)
+      console.log(data.cash)
       this.chartOptions = {
         data: [
           { asset: "Stocks", amount: data.stock },
