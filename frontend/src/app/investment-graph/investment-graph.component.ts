@@ -25,7 +25,15 @@ constructor() {
           type: "donut",
           calloutLabelKey: "asset",
           angleKey: "amount",
-          innerRadiusRatio: 0.7,
+          innerRadiusRatio: 0.8,
+          innerLabels: [
+                      {
+                          text: 'Total Investments: \n $100,000',
+                          spacing: 4,
+                          fontSize: 10,
+                          color: 'black',
+                      },
+          ],
         },
       ],
     };

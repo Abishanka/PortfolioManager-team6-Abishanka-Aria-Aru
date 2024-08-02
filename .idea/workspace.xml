@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="da32bf1f-609c-4316-8676-e91d8c3a0078" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/page/page.component.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/market-overview/market-overview.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/market-overview/market-overview.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/investment-graph/investment-graph.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/investment-graph/investment-graph.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/investment-graph/investment-graph.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/investment-graph/investment-graph.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/page/page.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/page/page.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/page/page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/page/page.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
