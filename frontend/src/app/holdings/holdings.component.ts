@@ -1,5 +1,5 @@
 import { Component, PipeTransform } from '@angular/core';
-import { AsyncPipe, LowerCasePipe } from '@angular/common';
+import { AsyncPipe, LowerCasePipe, CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { Observable } from 'rxjs';
@@ -23,7 +23,7 @@ const PORTFOLIO: PortfolioInstrument[] = [
     sharesOwned: 50,
     marketValue: 7500,
     currentPrice: 150,
-    todaysReturns: 200,
+    todaysReturns: -200,
     totalReturn: 1000
   },
   {
@@ -33,7 +33,7 @@ const PORTFOLIO: PortfolioInstrument[] = [
     marketValue: 9000,
     currentPrice: 300,
     todaysReturns: 150,
-    totalReturn: 1200
+    totalReturn: -1200
   },
   {
     name: "Amazon.com Inc.",
@@ -51,7 +51,7 @@ const PORTFOLIO: PortfolioInstrument[] = [
     marketValue: 16000,
     currentPrice: 800,
     todaysReturns: 500,
-    totalReturn: 4000
+    totalReturn: -4000
   },
   {
     name: "Alphabet Inc.",
@@ -78,7 +78,7 @@ function search(text: string, pipe: PipeTransform): PortfolioInstrument[] {
 @Component({
   selector: 'app-holdings',
   standalone: true,
-  imports: [LowerCasePipe, AsyncPipe, ReactiveFormsModule, NgbHighlight],
+  imports: [LowerCasePipe, AsyncPipe, ReactiveFormsModule, NgbHighlight, CommonModule],
   templateUrl: './holdings.component.html',
   styleUrl: './holdings.component.css',
   providers: [LowerCasePipe]
