@@ -106,6 +106,14 @@ def fetch_stock_holdings():
 def fetch_bond_holding():
     pass
 
+# returns a tuple of the reccord returned fields are: stock_id, transaction_id, ticker, volume, price
+def fetch_last_transaction(table):
+    db_cursor.execute(f"""
+        SELECT * FROM {table} ORDER BY stock_id DESC LIMIT 1
+        """)
+    results = db_cursor.fetchone()
+    return results 
+
 def buy_stock(ticker, num_shares, price):
     # insert transaction into transaction table
     db_cursor.execute(f"""
@@ -134,7 +142,8 @@ def buy_stock(ticker, num_shares, price):
     WHERE ticker = '{ticker}';
     """)
     db_cursor.commit()
-    pass
+    return ({'status': "success",
+             'rows_impacted': db_cursor.rowcount})
 
 def buy_bond():
     pass
@@ -172,8 +181,9 @@ def sell_stock(ticker, num_shares, price):
     WHERE instrument_type = cash;
     """)
     db_cursor.commit()
-
-    pass
+    return ({'status': "success",
+             'rows_impacted': db_cursor.rowcount})
+    
 
 def sell_bond():
     pass
@@ -198,7 +208,8 @@ def add_cash(amount):
     VALUES (last_inset_rowid(), {amount});
     """ )
     db_cursor.commit()
-    pass
+    return ({'status': "success",
+             'rows_impacted': db_cursor.rowcount})
 
 def remove_cash(amount):
     # update cash in holdings 
@@ -220,4 +231,5 @@ def remove_cash(amount):
     VALUES (last_inset_rowid(), {amount});
     """ )
     db_cursor.commit()
-    pass
+    return ({'status': "success",
+             'rows_impacted': db_cursor.rowcount})
