@@ -6,6 +6,7 @@ import { NgbActiveModal, NgbModal, ModalDismissReasons, NgbDatepickerModule, Ngb
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PerformanceGraphComponent } from '../performance-graph/performance-graph.component';
 
+
 @Component({
 selector: 'ngbd-modal1-content',
 imports: [NgbDatepickerModule, NgbTimepickerModule, FormsModule, JsonPipe, PerformanceGraphComponent],
@@ -31,7 +32,7 @@ export class NgbdModal1Content {
 
 @Component({
   standalone: true,
-  imports: [NgbDatepickerModule, NgbTimepickerModule, FormsModule, JsonPipe, PerformanceGraphComponent],
+  imports: [NgbDatepickerModule, NgbTimepickerModule, FormsModule, JsonPipe, PerformanceGraphComponent, ],
 
   templateUrl: './modal-second.html',
 })

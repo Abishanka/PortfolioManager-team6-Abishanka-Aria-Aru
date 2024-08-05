@@ -7,6 +7,8 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HoldingsComponent } from '../holdings/holdings.component';
 import { GloalSearchComponent } from '../gloal-search/gloal-search.component';
 
+
+
 @Component({
   selector: 'app-page',
   standalone: true,
