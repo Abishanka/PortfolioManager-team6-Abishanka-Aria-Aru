@@ -21,7 +21,7 @@ def current_holdings_sum():
             case 'cash':
                 cash_sum += entry[7]
             case 'bonds':
-                bond_sum += entry[7]
+                bonds_sum += entry[7]
             case 'stocks':
                 stocks_sum += (entry[4]*entry[5])
             case _:
@@ -32,6 +32,32 @@ def current_holdings_sum():
         'stock': stocks_sum
     })
 
+# TODO: market value, todays returns as percent, total return as percentage, current 
+@app.route('/currentholdings')
+def current_holdings():
+    current_holdings = data_func.fetch_current_holdings()
+    holdings = []
+    # current holdings is tuple (holding_id, instrument_type, ticker, name, number_of_shares, average_price_paid, face_value, amount)
+    for entry in current_holdings:
+        holding_dict = {
+            'instrument_type': entry[1],
+            'ticker': entry[2],
+            'name': entry[3],
+            'number_of_shares': entry[4],
+            'average_price_paid': entry[5],
+            'face_value': entry[6],
+            'amount': entry[7]
+        }
+        holdings.append(holding_dict)
+    return ({
+        'holdings': holdings,
+    })
+
+@app.route('/stockinfo')
+def stock_info():
+    ticker = request.args.get('ticker')
+    stock_info = data_func.get_stock_info(ticker)
+    return stock_info # {'price', 'dividendYield', '52-wk-low', '52-wk-high', 'trailing_PE'}
 
 #Information on instruments currently in Portfolio
 @app.route('/portfolioinstrument/<string:instrumenttype>/<string:ticker>')
@@ -65,8 +91,8 @@ def portfolio_add_equity(instrumenttype):
                     'last_transaction': last_cash_transaction}
     else:
         # TODO: NOT IMPLEMENTED BOND 
-        return {'status': 'fail - NOT IMPL',
-                    'last_transaction': False}
+        return ({'status': 'fail - NOT IMPL',
+                    'last_transaction': False})
 
 #Remove instrument from Portfolio
 @app.route('/delinstrument/<string:instrumenttype>')
@@ -95,14 +121,15 @@ def portfolio_del_equity(instrumenttype):
                     'last_transaction': last_cash_transaction}
     else:
         # TODO: NOT IMPLEMENTED BOND 
-        return {'status': 'fail - NOT IMPL',
-                    'last_transaction': False}
+        return ({'status': 'fail - NOT IMPL',
+                    'last_transaction': False})
 
 #Search for instrument
 @app.route('/searchinstrument/<string:instrumenttype>/', methods=['GET'])
 def search_equity():
-    query = request.args.get('query')
-    return jsonify()
+    ticker = request.args.get('ticker')
+    stock_info = data_func.get_stock_info(ticker)
+    return (stock_info)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
