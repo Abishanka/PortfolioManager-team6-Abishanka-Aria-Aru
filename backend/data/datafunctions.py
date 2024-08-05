@@ -80,12 +80,12 @@ def createdb():
         amount DECIMAL(10, 2)
     );"""
     ))
-    # # insert into holding table a cash row initialized to 0
-    # db_cursor.execute(f"""
-    # INSERT INTO current_holdings (instrument_type, amount)
-    # VALUES ('cash', 0);
-    # """ )
-    # db_cursor.commit()
+    # insert into holding table a cash row initialized to 0
+    db_cursor.execute(f"""
+    INSERT INTO current_holdings (instrument_type, amount)
+    VALUES ('cash', 0);
+    """ )
+    db_conn.commit()
     
 
 def fetch_investment_summary():
@@ -121,26 +121,34 @@ def fetch_current_holdings():
     results = db_cursor.fetchall()
     return results 
 
+#
+# def fetch_instrument_in_current_holdings():
+#     db_cursor.execute(f"""
+#         SELECT * FROM current_holdings
+#         """)
+#     results = db_cursor.fetchall()
+#     return results 
+
 def buy_stock(ticker, num_shares, price):
     # insert transaction into transaction table
     db_cursor.execute(f"""
     INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
     VALUES ('buy' ,'stock', DATE('now'));
     """ )
-    db_cursor.commit()
+    db_conn.commit()
     # insert purchase into stocks table
     db_cursor.execute(f"""
     INSERT INTO stocks (transaction_id, ticker, volume, price)
     VALUES (last_inset_rowid() , '{ticker}', {num_shares}, {price});
     """  )
-    db_cursor.commit()
+    db_conn.commit()
     # insert row into holdings if row for ticker does not exist 
     db_cursor.execute(f"""
     INSERT INTO current_holdings (instrument_type, ticker, number_of_shares, average_price_paid)
     VALUES ('stock', '{ticker}', 0, 0)
     WHERE NOT EXISTS (SELECT 1 FROM current_holdings WHERE ticker = '{ticker}');
     """)
-    db_cursor.commit()
+    db_conn.commit()
     # updates values in holding table 
     db_cursor.execute(f"""
     UPDATE current_holdings
@@ -148,7 +156,7 @@ def buy_stock(ticker, num_shares, price):
         average_price_paid = ((number_of_shares*average_price_paid) + ({num_shares}*{price}))/({num_shares}+number_of_shares)
     WHERE ticker = '{ticker}';
     """)
-    db_cursor.commit()
+    db_conn.commit()
     return ({'status': "success",
              'rows_impacted': db_cursor.rowcount})
 
@@ -161,33 +169,33 @@ def sell_stock(ticker, num_shares, price):
     INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
     VALUES ('sell' ,'stock', DATE('now'));
     """ )
-    db_cursor.commit()
+    db_conn.commit()
     # insert sale into stocks table
     db_cursor.execute(f"""
     INSERT INTO stocks (transaction_id, ticker, volume, price)
     VALUES (last_inset_rowid() , '{ticker}', {num_shares}, {price});
     """  )
-    db_cursor.commit()
+    db_conn.commit()
     # updates values in holding table 
     db_cursor.execute(f"""
     UPDATE current_holdings
     SET number_of_shares = number_of_shares - {num_shares}
     WHERE ticker = '{ticker}';
     """)
-    db_cursor.commit()
+    db_conn.commit()
     # removes row if no holding 
     db_cursor.execute(f"""
     DELETE FROM current_holdings
     WHERE number_of_shares = 0;
     """)
-    db_cursor.commit()
+    db_conn.commit()
     # update cash holding 
     db_cursor.execute(f"""
     UPDATE current_holdings
     SET amount = amount + ({num_shares} * {price})
     WHERE instrument_type = cash;
     """)
-    db_cursor.commit()
+    db_conn.commit()
     return ({'status': "success",
              'rows_impacted': db_cursor.rowcount})
     
@@ -202,19 +210,19 @@ def add_cash(amount):
     SET amount = amount + {amount}
     WHERE instrument_type = 'cash';
     """)
-    db_cursor.commit()
+    db_conn.commit()
     # add to transaction table
     db_cursor.execute(f"""
     INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
     VALUES ('buy' ,'cash', DATE('now'));
     """ )
-    db_cursor.commit()
+    db_conn.commit()
     # add to cash table 
     db_cursor.execute(f"""
     INSERT INTO cash (transaction_id, amount)
     VALUES (last_inset_rowid(), {amount});
     """ )
-    db_cursor.commit()
+    db_conn.commit()
     return ({'status': "success",
              'rows_impacted': db_cursor.rowcount})
 
@@ -225,18 +233,18 @@ def remove_cash(amount):
     SET amount = amount - {amount}
     WHERE instrument_type = 'cash';
     """)
-    db_cursor.commit()
+    db_conn.commit()
     # add to transaction table
     db_cursor.execute(f"""
     INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
     VALUES ('sell' ,'cash', DATE('now'));
     """ )
-    db_cursor.commit()
+    db_conn.commit()
     # add to cash table 
     db_cursor.execute(f"""
     INSERT INTO cash (transaction_id, amount)
     VALUES (last_inset_rowid(), {amount});
     """ )
-    db_cursor.commit()
+    db_conn.commit()
     return ({'status': "success",
              'rows_impacted': db_cursor.rowcount})
