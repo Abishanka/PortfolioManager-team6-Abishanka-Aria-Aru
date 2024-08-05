@@ -20,9 +20,9 @@ def current_holdings_sum():
         match entry[1]:
             case 'cash':
                 cash_sum += entry[7]
-            case 'bonds':
+            case 'bond':
                 bonds_sum += entry[7]
-            case 'stocks':
+            case 'stock':
                 stocks_sum += (entry[4]*entry[5])
             case _:
                 pass
