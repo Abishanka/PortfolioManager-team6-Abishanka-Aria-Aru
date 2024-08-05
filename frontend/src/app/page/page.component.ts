@@ -5,23 +5,19 @@ import { MarketOverviewComponent } from '../market-overview/market-overview.comp
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HoldingsComponent } from '../holdings/holdings.component';
-import { NgbdModalComponent } from '../modal/modal.component';
-
+import { GloalSearchComponent } from '../gloal-search/gloal-search.component';
 
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [PerformanceGraphComponent, InvestmentsComponent, NgbModule, MarketOverviewComponent, HoldingsComponent, NgbdModalComponent],
+  imports: [PerformanceGraphComponent, InvestmentsComponent, NgbModule, MarketOverviewComponent, HoldingsComponent, GloalSearchComponent],
   templateUrl: './page.component.html',
   styleUrl: './page.component.css'
 })
 export class PageComponent {
-constructor(private modalService: NgbModal) {
-  }
+constructor(private modalService: NgbModal) { }
 
   public open(modal: any): void {
     this.modalService.open(modal);
   }
-
-
 }

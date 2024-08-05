@@ -1,0 +1,9 @@
+<div class="search-container">
+    <input type="text" [formControl]="searchControl" placeholder="Search instruments..." class="search-input" />
+  
+    <ul *ngIf="results$ | async as results" class="dropdown-menu">
+      <li *ngFor="let result of results" class="dropdown-item">
+        {{ displayWith(result) }}
+      </li>
+    </ul>
+  </div>

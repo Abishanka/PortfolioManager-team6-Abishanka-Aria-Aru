@@ -1,69 +1,64 @@
+// modal.component.ts
 import { Component, inject, Input } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+import { NgbActiveModal, NgbModal, ModalDismissReasons, NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PerformanceGraphComponent } from '../performance-graph/performance-graph.component';
 
 @Component({
-selector: 'ngbd-modal-content',
+selector: 'ngbd-modal1-content',
+imports: [NgbDatepickerModule, NgbTimepickerModule, FormsModule, JsonPipe, PerformanceGraphComponent],
 standalone: true,
-imports:[PerformanceGraphComponent],
-template: `
-<div class="modal-header">
-<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
-</div>
-
-<div class="container px-4 py-5">
-  <h2 class="pb-2 border-bottom"> {{name}}</h2>
-  <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
-    <div class="col d-flex flex-column align-items-start gap-2">
-      <app-performance-graph></app-performance-graph>
-      <a href="#" class="btn btn-primary btn-lg">BUY</a>
-      <a href="#" class="btn btn-primary btn-lg">SELL</a>
-    </div>
-    <div class="col d-flex flex-column align-items-start gap-2">
-      <div class="table-responsive small">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">Shares Owned</th>
-              <th scope="col">Average Cost</th>
-              <th scope="col">52 Week High</th>
-              <th scope="col">Trailing P/E Ratio</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-            <td>10</td>
-            <td>$100.21</td>
-            <td>$142.74</td>
-            <td>112.5</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-  </div>
-  <div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.close('Close click')">Close</button>
-  </div>
-</div>
-`,
+templateUrl: './modal-first.html',
 })
-export class NgbdModalContent {
-activeModal = inject(NgbActiveModal);
 
-@Input() name: string = '';}
+export class NgbdModal1Content {
+  private modalService = inject(NgbModal);
+  activeModal = inject(NgbActiveModal);
+
+  openXl() {
+      this.modalService.open(NgbdModal2Content, { size: 'xl' });
+    }
+  openLg() {
+		this.modalService.open(NgbdModal2Content, { size: 'lg' });
+	}
+  numStocks = { hour: 13, minute: 30 };
+  @Input() name: string = '';
+}
+
+
 
 @Component({
-selector: 'ngbd-modal-component',
-standalone: true,
-templateUrl: './modal.component.html',
-})
-export class NgbdModalComponent {
-  private modalService = inject(NgbModal);
+  standalone: true,
+  imports: [NgbDatepickerModule, NgbTimepickerModule, FormsModule, JsonPipe, PerformanceGraphComponent],
 
-  open() {
-      const modalRef = this.modalService.open(NgbdModalContent, { size: 'lg' });
-      modalRef.componentInstance.name = 'Tesla';
+  templateUrl: './modal-second.html',
+})
+export class NgbdModal2Content {
+  activeModal = inject(NgbActiveModal);
+}
+
+@Component({
+  selector: 'ngbd-modal-stacked',
+  standalone: true,
+  imports: [NgbDatepickerModule, NgbTimepickerModule, FormsModule, JsonPipe, PerformanceGraphComponent],
+  templateUrl: './modal.component.html',
+})
+export class NgbdModalStacked {
+  private modalService = inject(NgbModal);
+  modalsNumber = 0;
+
+  constructor() {
+    this.modalService.activeInstances.pipe(takeUntilDestroyed()).subscribe((list) => {
+      this.modalsNumber = list.length;
+    });
+  }
+
+  openXl() {
+      this.modalService.open(NgbdModal1Content, { size: 'xl' });
     }
+  openLg() {
+		this.modalService.open(NgbdModal1Content, { size: 'lg' });
+	}
 }
