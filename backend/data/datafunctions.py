@@ -80,12 +80,12 @@ def createdb():
         amount DECIMAL(10, 2)
     );"""
     ))
-    # insert into holding table a cash row initialized to 0
-    db_cursor.execute(f"""
-    INSERT INTO current_holdings (instrument_type, amount)
-    VALUES ('cash', 0);
-    """ )
-    db_cursor.commit()
+    # # insert into holding table a cash row initialized to 0
+    # db_cursor.execute(f"""
+    # INSERT INTO current_holdings (instrument_type, amount)
+    # VALUES ('cash', 0);
+    # """ )
+    # db_cursor.commit()
     
 
 def fetch_investment_summary():
