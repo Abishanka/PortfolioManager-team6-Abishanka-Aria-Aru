@@ -7,6 +7,7 @@ import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import {NgbdModalStacked} from '../modal/modal.component';
 import { HoldingsService } from '../holdings.service'; // Adjust the import path as necessary
 
+
 interface PortfolioInstrument {
   name: string;
   ticker: string,
@@ -92,9 +93,7 @@ function search(text: string, pipe: PipeTransform, portfolio: PortfolioInstrumen
 export class HoldingsComponent {
   portfolioinstruments$!: Observable<PortfolioInstrument[]>;
 	filter = new FormControl('', { nonNullable: true });
-
-	constructor(private holdingsService: HoldingsService, private pipe: LowerCasePipe) {
-  }
+  constructor(private holdingsService: HoldingsService, private pipe: LowerCasePipe) {}
 
   ngOnInit() {
     let portfolio$ = this.holdingsService.getPortfolio();
@@ -108,8 +107,8 @@ export class HoldingsComponent {
               const filtered = search(text, this.pipe, portfolio.holdings);
               return filtered;
             })
-          )
-        )
+      )
+      )
       );
     });
   }

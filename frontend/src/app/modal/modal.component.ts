@@ -2,14 +2,14 @@
 import { Component, inject, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
-import { NgbActiveModal, NgbModal, ModalDismissReasons, NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PerformanceGraphComponent } from '../performance-graph/performance-graph.component';
 
 
 @Component({
 selector: 'ngbd-modal1-content',
-imports: [NgbDatepickerModule, NgbTimepickerModule, FormsModule, JsonPipe, PerformanceGraphComponent],
+imports: [ FormsModule, JsonPipe, PerformanceGraphComponent],
 standalone: true,
 templateUrl: './modal-first.html',
 })
@@ -32,7 +32,7 @@ export class NgbdModal1Content {
 
 @Component({
   standalone: true,
-  imports: [NgbDatepickerModule, NgbTimepickerModule, FormsModule, JsonPipe, PerformanceGraphComponent, ],
+  imports: [FormsModule, JsonPipe, PerformanceGraphComponent, ],
 
   templateUrl: './modal-second.html',
 })
@@ -43,7 +43,7 @@ export class NgbdModal2Content {
 @Component({
   selector: 'ngbd-modal-stacked',
   standalone: true,
-  imports: [NgbDatepickerModule, NgbTimepickerModule, FormsModule, JsonPipe, PerformanceGraphComponent],
+  imports: [FormsModule, JsonPipe, PerformanceGraphComponent],
   templateUrl: './modal.component.html',
 })
 export class NgbdModalStacked {
