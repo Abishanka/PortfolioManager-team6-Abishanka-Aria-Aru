@@ -17,6 +17,11 @@ interface PortfolioInstrument {
   totalReturn: number;
 }
 
+interface HoldingsRes {
+  holdings: PortfolioInstrument[]
+}
+
+
 // const PORTFOLIO: PortfolioInstrument[] = [
 //   {
 //     name: "Apple Inc.",
@@ -62,13 +67,13 @@ interface PortfolioInstrument {
 //     currentPrice: 2800,
 //     todaysReturns: 200,
 //     totalReturn: 1800
-//   }
+//   } 
 // ];
 
 
 function search(text: string, pipe: PipeTransform, portfolio: PortfolioInstrument[]): PortfolioInstrument[] {
 	return portfolio.filter((instrument) => {
-		const term = text.toLowerCase();
+		const term = (text || '').toLowerCase();
 		return (
 			instrument.name.toLowerCase().includes(term) ||
 			pipe.transform(instrument.ticker).includes(term)
@@ -85,19 +90,27 @@ function search(text: string, pipe: PipeTransform, portfolio: PortfolioInstrumen
   providers: [LowerCasePipe]
 })
 export class HoldingsComponent {
-  portfolioinstruments$: Observable<PortfolioInstrument[]>;
+  portfolioinstruments$!: Observable<PortfolioInstrument[]>;
 	filter = new FormControl('', { nonNullable: true });
 
-	constructor(private holdingsService: HoldingsService, pipe: LowerCasePipe) {
-    const portfolio$ = this.holdingsService.getPortfolio();
-		this.portfolioinstruments$ = this.filter.valueChanges.pipe(
-			startWith(''),
-      switchMap((text) => 
-        portfolio$.pipe(
-          map((portfolio) => search(text, pipe, portfolio))
-        )
-      )
-		);
-	}
+	constructor(private holdingsService: HoldingsService, private pipe: LowerCasePipe) {
+  }
 
+  ngOnInit() {
+    let portfolio$ = this.holdingsService.getPortfolio();
+    portfolio$.subscribe((data) => {
+      console.log('Data received from backend:', data.holdings);
+      this.portfolioinstruments$ = this.filter.valueChanges.pipe(
+        startWith(''),
+        switchMap((text) => 
+          portfolio$.pipe(
+            map((portfolio) => {
+              const filtered = search(text, this.pipe, portfolio.holdings);
+              return filtered;
+            })
+          )
+        )
+      );
+    });
+  }
 }

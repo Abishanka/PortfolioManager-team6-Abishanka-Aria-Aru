@@ -11,7 +11,7 @@ def portfolio_overview():
 
 @app.route('/currentholdingssum')
 def current_holdings_sum():
-    current_holdings = data_func.fetch_current_holdings
+    current_holdings = data_func.fetch_current_holdings()
     # current holdings is tuple (holding_id, instrument_type, ticker, name, number_of_shares, average_price_paid, face_value, amount)
     stocks_sum = 0
     bonds_sum = 0 
@@ -40,18 +40,19 @@ def current_holdings():
     # current holdings is tuple (holding_id, instrument_type, ticker, name, number_of_shares, average_price_paid, face_value, amount)
     for entry in current_holdings:
         holding_dict = {
-            'instrument_type': entry[1],
-            'ticker': entry[2],
             'name': entry[3],
-            'number_of_shares': entry[4],
-            'average_price_paid': entry[5],
-            'face_value': entry[6],
-            'amount': entry[7]
+            'ticker': entry[2],
+            'instrumentType': entry[1],
+            'sharesOwned': entry[4],
+            'marketValue': 0,
+            'currentPrice': 0,    
+            'todaysReturns': 0,    
+            'totalReturn': 0,
         }
         holdings.append(holding_dict)
-    return ({
-        'holdings': holdings,
-    })
+    return  ({
+        'holdings': holdings
+        })
 
 @app.route('/stockinfo')
 def stock_info():

@@ -19,16 +19,19 @@ interface SearchOption {
 })
 export class GloalSearchComponent {
   searchControl = new FormControl('');
-  results$: Observable<SearchOption[]>;
+  // results$: Observable<SearchOption[]>;
 
-  constructor(private searchService: GloalSearchService) {
-    this.results$ = this.searchControl.valueChanges.pipe(
-      startWith(''),
-      switchMap((term) => this.searchService.searchInstruments(term))
-    );
-  }
+  // constructor(private searchService: GloalSearchService) {
+  //   this.results$ = this.searchControl.valueChanges.pipe(
+  //     startWith(''),
+  //     switchMap((term) => this.searchService.searchInstruments(term))
+  //   );
+  // }
 
-  displayWith(item: SearchOption): string {
-    return item ? `${item.name} (${item.ticker})` : '';
+  // displayWith(item: SearchOption): string {
+  //   return item ? `${item.name} (${item.ticker})` : '';
+  // }
+  onSubmit() {
+    console.log("Submitted")
   }
 }

@@ -1,7 +1,7 @@
 import sqlite3
 import yfinance as yf
 
-db_conn = sqlite3.connect('portfolio.db')
+db_conn = sqlite3.connect('portfolio.db', check_same_thread=False)
 db_cursor = db_conn.cursor()
 
 # returns a dictionary of the relevant info needed for front end stock info 
@@ -116,7 +116,7 @@ def fetch_last_transaction(table):
 
 def fetch_current_holdings():
     db_cursor.execute(f"""
-        SELECT * FROM current_holdings
+        SELECT * FROM current_holdings 
         """)
     results = db_cursor.fetchall()
     return results 

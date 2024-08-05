@@ -4,12 +4,17 @@ import { Observable } from 'rxjs';
 
 interface PortfolioInstrument {
   name: string;
-  ticker: string,              
+  ticker: string;
+  instrumentType: string;              
   sharesOwned: number;  
   marketValue: number;
   currentPrice: number;    
   todaysReturns: number;    
-  totalReturn: number;     
+  totalReturn: number;
+}
+
+interface HoldingsRes {
+  holdings: PortfolioInstrument[]
 }
 
 @Injectable({
@@ -18,7 +23,7 @@ interface PortfolioInstrument {
 export class HoldingsService {
   private apiUrl = 'http://127.0.0.1:5000/currentholdings';
   constructor(private http: HttpClient) { }
-  getPortfolio(): Observable<PortfolioInstrument[]> {
-    return this.http.get<PortfolioInstrument[]>(this.apiUrl);
+  getPortfolio(): Observable<HoldingsRes> {
+    return this.http.get<HoldingsRes>(this.apiUrl);
   }
 }
