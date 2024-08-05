@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="da32bf1f-609c-4316-8676-e91d8c3a0078" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_1_2024_5_41_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_1_2024_5_41_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_1_2024_5_42_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_8_1_2024_5_42_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/modal/modal-first.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/modal/modal-second.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/holdings/holdings.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/holdings/holdings.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/holdings/holdings.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/holdings/holdings.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/modal/modal.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/modal/modal.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/modal/modal.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/modal/modal.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/page/page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/page/page.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/page/page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/page/page.component.ts" afterDir="false" />
     </list>
@@ -15,6 +19,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -28,18 +39,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Administrator/Desktop/frontend/src/app&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;two.files.diff.last.used.folder&quot;: &quot;C:/Users/Administrator/Desktop/frontend/src/app&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Administrator/Desktop/frontend/src/app",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "two.files.diff.last.used.folder": "C:/Users/Administrator/Desktop/frontend/src/app"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

@@ -17,12 +17,9 @@ import { NgbdModalComponent } from '../modal/modal.component';
   styleUrl: './page.component.css'
 })
 export class PageComponent {
-constructor(private modalService: NgbModal) {
-  }
+constructor(private modalService: NgbModal) { }
 
   public open(modal: any): void {
     this.modalService.open(modal);
   }
-
-
 }
