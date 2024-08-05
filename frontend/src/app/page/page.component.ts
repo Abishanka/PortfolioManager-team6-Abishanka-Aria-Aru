@@ -6,13 +6,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HoldingsComponent } from '../holdings/holdings.component';
 import { GloalSearchComponent } from '../gloal-search/gloal-search.component';
+import { FundsComponent } from '../funds-management/funds.component';
 
 
 
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [PerformanceGraphComponent, InvestmentsComponent, NgbModule, MarketOverviewComponent, HoldingsComponent, GloalSearchComponent],
+  imports: [PerformanceGraphComponent, InvestmentsComponent, NgbModule, MarketOverviewComponent, HoldingsComponent, GloalSearchComponent, FundsComponent],
   templateUrl: './page.component.html',
   styleUrl: './page.component.css'
 })
