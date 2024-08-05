@@ -5,15 +5,17 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
+import {NgbdModalStacked} from '../modal/modal.component';
+
 
 interface PortfolioInstrument {
   name: string;
-  ticker: string,              
-  sharesOwned: number;  
+  ticker: string,
+  sharesOwned: number;
   marketValue: number;
-  currentPrice: number;    
-  todaysReturns: number;    
-  totalReturn: number;     
+  currentPrice: number;
+  todaysReturns: number;
+  totalReturn: number;
 }
 
 const PORTFOLIO: PortfolioInstrument[] = [
@@ -78,7 +80,7 @@ function search(text: string, pipe: PipeTransform): PortfolioInstrument[] {
 @Component({
   selector: 'app-holdings',
   standalone: true,
-  imports: [LowerCasePipe, AsyncPipe, ReactiveFormsModule, NgbHighlight, CommonModule],
+  imports: [LowerCasePipe, AsyncPipe, ReactiveFormsModule, NgbHighlight, CommonModule, NgbdModalStacked],
   templateUrl: './holdings.component.html',
   styleUrl: './holdings.component.css',
   providers: [LowerCasePipe]
@@ -92,6 +94,6 @@ export class HoldingsComponent {
 			startWith(''),
 			map((text) => search(text, pipe)),
 		);
-	} 
+	}
 
 }
