@@ -5,16 +5,23 @@ db_conn = sqlite3.connect('portfolio.db', check_same_thread=False)
 db_cursor = db_conn.cursor()
 
 # returns a dictionary of the relevant info needed for front end stock info 
+# if stock does not have dividend, yield is '-'
 def get_stock_info(ticker):
     yf_ticker = yf.Ticker(ticker)
     info = yf_ticker.info
     bid = info['bid']
     ask = info['ask']
     price = round((bid+ask)/2, 2)
-    div_yield = info['dividendYield']
+    if 'dividendYield' in info.keys():
+        div_yield = info['dividendYield']
+    else:
+        div_yield = '-'
     year_low = info['fiftyTwoWeekLow']
     year_high = info['fiftyTwoWeekHigh']
-    trailing_PE = info['trailingPE']
+    if 'trailingPE' in info.keys():
+        trailing_PE = info['trailingPE']
+    else:
+        trailing_PE = '-' 
     return_info = {
         'price': price,
         'dividendYield': div_yield,
@@ -108,8 +115,12 @@ def fetch_bond_holding():
 
 # returns a tuple of the reccord returned fields are: stock_id, transaction_id, ticker, volume, price
 def fetch_last_transaction(table):
+    if table == 'cash':
+        id = 'cash'
+    else:
+        id = table[:-1]
     db_cursor.execute(f"""
-        SELECT * FROM {table} ORDER BY stock_id DESC LIMIT 1
+        SELECT * FROM {table} ORDER BY {id}_id DESC LIMIT 1
         """)
     results = db_cursor.fetchone()
     return results 
@@ -139,13 +150,13 @@ def buy_stock(ticker, num_shares, price):
     # insert purchase into stocks table
     db_cursor.execute(f"""
     INSERT INTO stocks (transaction_id, ticker, volume, price)
-    VALUES (last_inset_rowid() , '{ticker}', {num_shares}, {price});
+    VALUES (last_insert_rowid() , '{ticker}', {num_shares}, {price});
     """  )
     db_conn.commit()
     # insert row into holdings if row for ticker does not exist 
     db_cursor.execute(f"""
     INSERT INTO current_holdings (instrument_type, ticker, number_of_shares, average_price_paid)
-    VALUES ('stock', '{ticker}', 0, 0)
+    SELECT 'stock', '{ticker}', 0, 0
     WHERE NOT EXISTS (SELECT 1 FROM current_holdings WHERE ticker = '{ticker}');
     """)
     db_conn.commit()
@@ -220,7 +231,7 @@ def add_cash(amount):
     # add to cash table 
     db_cursor.execute(f"""
     INSERT INTO cash (transaction_id, amount)
-    VALUES (last_inset_rowid(), {amount});
+    VALUES (last_insert_rowid(), {amount});
     """ )
     db_conn.commit()
     return ({'status': "success",
