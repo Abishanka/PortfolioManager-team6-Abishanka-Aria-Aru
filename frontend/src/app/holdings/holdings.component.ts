@@ -7,6 +7,7 @@ import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import {NgbdModalStacked} from '../modal/modal.component';
 import { HoldingsService } from '../holdings.service'; // Adjust the import path as necessary
 
+
 interface PortfolioInstrument {
   name: string;
   ticker: string,
@@ -92,7 +93,7 @@ export class HoldingsComponent {
     const portfolio$ = this.holdingsService.getPortfolio();
 		this.portfolioinstruments$ = this.filter.valueChanges.pipe(
 			startWith(''),
-      switchMap((text) => 
+      switchMap((text) =>
         portfolio$.pipe(
           map((portfolio) => search(text, pipe, portfolio))
         )

@@ -11,13 +11,6 @@
         <app-performance-graph></app-performance-graph>
 
       </div>
-
-      <div class="row row-cols-1 row-cols-m-2 g-4">
-        <p><button class="btn btn-lg btn-outline-primary" (click)="openLg()">Buy</button></p>
-        <p><button class="btn btn-lg btn-outline-primary" (click)="openLg()">Sell</button></p>
-
-      </div>
-
     </div>
     <div class="col d-flex flex-column align-items-start gap-2">
       <div class="table-responsive small">
@@ -42,6 +35,31 @@
       </div>
 
     </div>
+  </div>
+  <div class="row align-items-md-center g-5 py-5">
+      <div class="col d-flex flex-column align-items-start gap-2">
+        <form class="form-inline feature-col">
+          <div class="form-group mb-2">
+            <label for="exampleInputNum">Number of Shares to Trade</label>
+
+            <input type="numShares" class="form-control" id="exampleInputNum" placeholder="Enter Number of Shares">
+          </div>
+
+        </form>
+
+      </div>
+
+      <div class="col d-flex flex-column align-items-start gap-2">
+        <label>Dollar Amount</label>
+        <p>$99.14</p>
+      </div>
+      <div class="col d-flex flex-column align-items-start gap-2">
+        <p><button type="submit" class="btn btn-primary mb-2" (click)="openLg()">BUY</button></p>
+
+        <p><button type="submit" class="btn btn-primary mb-2" (click)="openLg()">SELL</button></p>
+      </div>
+
+
   </div>
 
 </div>
