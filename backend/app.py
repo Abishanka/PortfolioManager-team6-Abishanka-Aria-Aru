@@ -50,9 +50,8 @@ def current_holdings():
             'totalReturn': 0,
         }
         holdings.append(holding_dict)
-    return  ({
-        'holdings': holdings
-        })
+    print(jsonify(holdings))
+    return  (jsonify(holdings))
 
 @app.route('/stockinfo')
 def stock_info():

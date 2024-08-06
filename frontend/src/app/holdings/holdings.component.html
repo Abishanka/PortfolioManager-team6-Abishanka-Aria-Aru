@@ -1,11 +1,11 @@
-<form>
+<!-- <form>
 	<div class="mb-3 row">
 		<label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label>
 		<div class="col-xs-3 col-sm-auto">
 			<input id="table-filtering-search" class="form-control" type="text" [formControl]="filter" />
 		</div>
 	</div>
-</form>
+</form> -->
 
 <table class="table table-striped">
     <thead>
@@ -21,9 +21,9 @@
         </tr>
     </thead>
     <tbody>
-        @for (instrument of portfolioinstruments$ | async; track instrument.name; let i = $index) {
-            <tr>
-                <td>{{i+1}}</td>
+        <!-- @for (instrument of portfolioinstruments$ | async; track instrument.name; let i = $index) { -->
+            <tr *ngFor="let instrument of portfolioinstruments$ | async; trackBy: trackByName">
+                <!-- <td>{{i+1}}</td> -->
                 <td>{{instrument.name}}</td>
                 <td>{{instrument.ticker}}</td>
                 <td>{{instrument.sharesOwned}}</td>
@@ -34,11 +34,11 @@
                 <td><ngbd-modal-stacked></ngbd-modal-stacked></td>
 
             </tr>
-        }
-        @empty {
-            <tr>
+        <!-- } -->
+        <!-- @empty { -->
+            <tr *ngIf="!(portfolioinstruments$ | async)?.length">
                 <td colspan="8" style="text-align: center">No instruments found</td>
             </tr>
-        }
+        <!-- } -->
     </tbody>
 </table>

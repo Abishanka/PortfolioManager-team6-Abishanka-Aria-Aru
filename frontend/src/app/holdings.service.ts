@@ -13,17 +13,13 @@ interface PortfolioInstrument {
   totalReturn: number;
 }
 
-interface HoldingsRes {
-  holdings: PortfolioInstrument[]
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class HoldingsService {
   private apiUrl = 'http://127.0.0.1:5000/currentholdings';
   constructor(private http: HttpClient) { }
-  getPortfolio(): Observable<HoldingsRes> {
-    return this.http.get<HoldingsRes>(this.apiUrl);
+  getPortfolio(): Observable<PortfolioInstrument[]> {
+    return this.http.get<PortfolioInstrument[]>(this.apiUrl);
   }
 }
