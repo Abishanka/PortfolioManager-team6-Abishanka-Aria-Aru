@@ -28,7 +28,7 @@ print ({
 })
 # %%
 # ADD CASH
-amount = 300
+amount = 900
 data_func.add_cash(amount)
 last_cash_transaction = data_func.fetch_last_transaction('cash')
 print({'status': 'success', 'last_transaction': last_cash_transaction})
@@ -36,7 +36,7 @@ print({'status': 'success', 'last_transaction': last_cash_transaction})
 ## BUY STOCK
 
 ticker = 'TSLA'
-amount = 4
+amount = 8
 
 stock_info = data_func.get_stock_info(ticker)
 price = stock_info['price']
