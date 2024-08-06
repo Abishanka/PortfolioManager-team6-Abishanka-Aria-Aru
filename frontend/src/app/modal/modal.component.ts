@@ -19,7 +19,7 @@ export class NgbdModal1Content {
   activeModal = inject(NgbActiveModal);
 
   openXl() {
-      this.modalService.open(NgbdModal2Content, { size: 'xl' });
+      this.modalService.open(NgbdModal2Content, { size: 'lg' });
     }
   openLg() {
 		this.modalService.open(NgbdModal2Content, { size: 'lg' });
@@ -27,8 +27,6 @@ export class NgbdModal1Content {
   numStocks = { hour: 13, minute: 30 };
   @Input() name: string = '';
 }
-
-
 
 @Component({
   standalone: true,

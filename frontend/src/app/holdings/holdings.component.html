@@ -21,9 +21,9 @@
         </tr>
     </thead>
     <tbody>
-        <!-- @for (instrument of portfolioinstruments$ | async; track instrument.name; let i = $index) { -->
-            <tr *ngFor="let instrument of portfolioinstruments$ | async; trackBy: trackByName">
-                <!-- <td>{{i+1}}</td> -->
+        @for (instrument of portfolioinstruments$ | async; track instrument.name; let i = $index) {
+            <tr>
+                <td>{{i+1}}</td>
                 <td>{{instrument.name}}</td>
                 <td>{{instrument.ticker}}</td>
                 <td>{{instrument.sharesOwned}}</td>
@@ -34,11 +34,11 @@
                 <td><ngbd-modal-stacked></ngbd-modal-stacked></td>
 
             </tr>
-        <!-- } -->
-        <!-- @empty { -->
-            <tr *ngIf="!(portfolioinstruments$ | async)?.length">
+        }
+        @empty {
+            <tr>
                 <td colspan="8" style="text-align: center">No instruments found</td>
             </tr>
-        <!-- } -->
+        }
     </tbody>
 </table>
