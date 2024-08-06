@@ -74,26 +74,6 @@ def current_holdings():
     holdings = []
     # current holdings is tuple (holding_id, instrument_type, ticker, name, number_of_shares, average_price_paid, face_value, amount)
     for entry in current_holdings:
-<<<<<<< HEAD
-        ticker = entry[2]
-        avg_price_paid = entry[5]
-        stock_info = data_func.get_stock_info(ticker)
-        shares_owned = entry[4]
-        market_value = round(shares_owned * stock_info['price'],2)
-        todays_return = round((stock_info['price']-stock_info['open'])/stock_info['open'], 2)
-        total_return = round((stock_info['price']-avg_price_paid)/avg_price_paid, 2)
-        holding_dict = {
-            'name': entry[3],
-            'ticker': ticker,
-            'instrumentType': entry[1],
-            'sharesOwned': shares_owned,
-            'marketValue': market_value,
-            'currentPrice': stock_info['price'],    
-            'todaysReturns': todays_return,   # percentage  
-            'totalReturn': total_return, # percentage
-        }
-        holdings.append(holding_dict)
-=======
         instrument_type = entry[1]
         if instrument_type == 'stock':
             ticker = entry[2]
@@ -127,7 +107,6 @@ def current_holdings():
                 'amount': entry[7],
             }
             holdings.append(holding_dict)
->>>>>>> a1d83e04d0a45d26564eb96e90d9c6c6aad00712
     return  (jsonify(holdings))
 
 #Add new instrument to Portfolio
