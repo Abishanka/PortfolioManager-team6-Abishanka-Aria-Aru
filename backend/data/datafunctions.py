@@ -91,10 +91,10 @@ def createdb():
     ))
     db_cursor.execute(("""
     CREATE TABLE holdings_history (
-        date DATE PRIMARY KEY DEFAULT GETDATE(),
+        date DATE PRIMARY KEY DEFAULT GETDATE,
         cash DECIMAL(10,2) NOT NULL,
         bonds DECIMAL(10,2) NOT NULL,               
-        stocks DECIMAL(10,2) NOT NULL,
+        stocks DECIMAL(10,2) NOT NULL
     );"""
     ))
     # insert into holding table a cash row initialized to 0
@@ -157,13 +157,24 @@ def fetch_holdings_history():
     results = db_cursor.fetchall()
     return results 
 
-#
-# def fetch_instrument_in_current_holdings():
-#     db_cursor.execute(f"""
-#         SELECT * FROM current_holdings
-#         """)
-#     results = db_cursor.fetchall()
-#     return results 
+def fetch_transactions():
+    db_cursor.execute(f"""
+        SELECT t.transaction_id, transaction_type, instrument_type, transaction_date, amount, ticker, volume, price, name, face_value, interest_rate 
+            FROM transactions as t
+                LEFT JOIN cash as c on t.transaction_id = c.transaction_id 
+                LEFT JOIN stocks as s on t.transaction_id = s.transaction_id
+                LEFT JOIN bonds as b on t.transaction_id = b.transaction_id
+        """)
+    results = db_cursor.fetchall()
+    return results 
+
+def fetch_stock_in_current_holdings(ticker):
+    db_cursor.execute(f"""
+        SELECT * FROM current_holdings
+        WHERE ticker = {ticker}
+        """)
+    results = db_cursor.fetchone()
+    return results 
 
 def buy_stock(ticker, num_shares, price):
     # insert transaction into transaction table
@@ -191,6 +202,13 @@ def buy_stock(ticker, num_shares, price):
     SET number_of_shares = {num_shares} + number_of_shares,
         average_price_paid = ((number_of_shares*average_price_paid) + ({num_shares}*{price}))/({num_shares}+number_of_shares)
     WHERE ticker = '{ticker}';
+    """)
+    db_conn.commit()
+    # update cash holdings
+    db_cursor.execute(f"""
+    UPDATE current_holdings
+    SET amount = amount - ({num_shares}*{price})
+    WHERE instrument_type = 'cash';
     """)
     db_conn.commit()
     return ({'status': "success",
