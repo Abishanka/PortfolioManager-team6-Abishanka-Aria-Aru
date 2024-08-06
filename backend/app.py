@@ -79,7 +79,7 @@ def current_holdings():
         stock_info = data_func.get_stock_info(ticker)
         shares_owned = entry[4]
         market_value = round(shares_owned * stock_info['price'],2)
-        todays_return = round((stock_info['price']-stock_info['open'])/stock_info[open], 2)
+        todays_return = round((stock_info['price']-stock_info['open'])/stock_info['open'], 2)
         total_return = round((stock_info['price']-avg_price_paid)/avg_price_paid, 2)
         holding_dict = {
             'name': entry[3],
