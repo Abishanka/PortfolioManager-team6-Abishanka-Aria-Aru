@@ -11,6 +11,7 @@ def get_stock_info(ticker):
     info = yf_ticker.info
     bid = info['bid']
     ask = info['ask']
+    open = info['open']
     price = round((bid+ask)/2, 2)
     if 'dividendYield' in info.keys():
         div_yield = info['dividendYield']
@@ -27,7 +28,8 @@ def get_stock_info(ticker):
         'dividendYield': div_yield,
         '52-wk-low': year_low,
         '52-wk-high': year_high,
-        'trailing_PE': trailing_PE
+        'trailing_PE': trailing_PE,
+        'open': open
     }
     return return_info
 

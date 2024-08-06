@@ -32,22 +32,28 @@ def current_holdings_sum():
         'stock': stocks_sum
     })
 
-# TODO: market value, todays returns as percent, total return as percentage, current 
 @app.route('/currentholdings')
 def current_holdings():
     current_holdings = data_func.fetch_current_holdings()
     holdings = []
     # current holdings is tuple (holding_id, instrument_type, ticker, name, number_of_shares, average_price_paid, face_value, amount)
     for entry in current_holdings:
+        ticker = entry[2]
+        avg_price_paid = entry[5]
+        stock_info = data_func.get_stock_info(ticker)
+        shares_owned = entry[4]
+        market_value = round(shares_owned * stock_info['price'],2)
+        todays_return = round((stock_info['price']-stock_info['open'])/stock_info[open], 2)
+        total_return = round((stock_info['price']-avg_price_paid)/avg_price_paid, 2)
         holding_dict = {
             'name': entry[3],
-            'ticker': entry[2],
+            'ticker': ticker,
             'instrumentType': entry[1],
-            'sharesOwned': entry[4],
-            'marketValue': 0,
-            'currentPrice': 0,    
-            'todaysReturns': 0,    
-            'totalReturn': 0,
+            'sharesOwned': shares_owned,
+            'marketValue': market_value,
+            'currentPrice': stock_info['price'],    
+            'todaysReturns': todays_return,   # percentage  
+            'totalReturn': total_return, # percentage
         }
         holdings.append(holding_dict)
     print(jsonify(holdings))
