@@ -89,6 +89,14 @@ def createdb():
         amount DECIMAL(10, 2)
     );"""
     ))
+    db_cursor.execute(("""
+    CREATE TABLE holdings_history (
+        date DATE PRIMARY KEY DEFAULT GETDATE(),
+        cash DECIMAL(10,2) NOT NULL,
+        bonds DECIMAL(10,2) NOT NULL,               
+        stocks DECIMAL(10,2) NOT NULL,
+    );"""
+    ))
     # insert into holding table a cash row initialized to 0
     db_cursor.execute(f"""
     INSERT INTO current_holdings (instrument_type, amount)
@@ -130,6 +138,21 @@ def fetch_last_transaction(table):
 def fetch_current_holdings():
     db_cursor.execute(f"""
         SELECT * FROM current_holdings 
+        """)
+    results = db_cursor.fetchall()
+    return results 
+
+def insert_holdings_history(cash_sum, bonds_sum, stocks_sum):
+    # insert row into holdings history  
+    db_cursor.execute(f"""
+    INSERT INTO holdings_history (date, cash, bonds, stocks)
+    VALUES (DATE(now), {cash_sum}, {bonds_sum}, {stocks_sum});
+    """)
+    db_conn.commit()
+    
+def fetch_holdings_history():
+    db_cursor.execute(f"""
+        SELECT * FROM holdings_history ORDER BY date
         """)
     results = db_cursor.fetchall()
     return results 
