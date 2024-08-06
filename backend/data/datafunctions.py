@@ -150,6 +150,12 @@ def insert_holdings_history(cash_sum, bonds_sum, stocks_sum):
     """)
     db_conn.commit()
     
+def fetch_holdings_history():
+    db_cursor.execute(f"""
+        SELECT * FROM holdings_history ORDER BY date
+        """)
+    results = db_cursor.fetchall()
+    return results 
 
 #
 # def fetch_instrument_in_current_holdings():

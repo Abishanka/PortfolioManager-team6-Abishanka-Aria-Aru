@@ -5,14 +5,49 @@ from data import datafunctions as data_func
 app = Flask(__name__)
 CORS(app)
 
+# returns list of dictionary with keys: date, cash, bonds, stocks, total
 @app.route('/portfoliooverview')
 def portfolio_overview():
+    holdings_history = data_func.fetch_holdings_history()
+    # holdings history is list of tuple (date, cash, bonds, stocks)
+    holdings_history_list = []
+    for entry in holdings_history:
+        entry_dict = {
+            'date': entry[0],
+            'cash': entry[1],
+            'bonds': entry[2],
+            'stocks': entry[3],
+            'total': entry[1] + entry[2] + entry[3]
+        }
+        holdings_history_list.append(entry_dict)
+    return jsonify(holdings_history_list)
+
+# call at 4 pm everyday -- saves current value of holdings into holdings_history table
+@app.route('/saveHoldings')
+def save_holdings():
+    current_holdings = data_func.fetch_current_holdings()
+    # current holdings is list of tuple (holding_id, instrument_type, ticker, name, number_of_shares, average_price_paid, face_value, amount)
+    stocks_sum = 0
+    bonds_sum = 0 
+    cash_sum = 0
+    for entry in current_holdings:
+        match entry[1]:
+            case 'cash':
+                cash_sum += entry[7]
+            case 'bond':
+                bonds_sum += entry[7]
+            case 'stock':
+                stocks_sum += (entry[4]*entry[5])
+            case _:
+                pass
+    data_func.insert_holdings_history(cash_sum, bonds_sum, stocks_sum)
     return jsonify()
 
+# returns dictionary of summary of holdings with keys: cash, bond, stock
 @app.route('/currentholdingssum')
 def current_holdings_sum():
     current_holdings = data_func.fetch_current_holdings()
-    # current holdings is tuple (holding_id, instrument_type, ticker, name, number_of_shares, average_price_paid, face_value, amount)
+    # current holdings is list of tuple (holding_id, instrument_type, ticker, name, number_of_shares, average_price_paid, face_value, amount)
     stocks_sum = 0
     bonds_sum = 0 
     cash_sum = 0
@@ -32,6 +67,7 @@ def current_holdings_sum():
         'stock': stocks_sum
     })
 
+# returns list of dictionary of current holdings 
 @app.route('/currentholdings')
 def current_holdings():
     current_holdings = data_func.fetch_current_holdings()
@@ -56,19 +92,7 @@ def current_holdings():
             'totalReturn': total_return, # percentage
         }
         holdings.append(holding_dict)
-    print(jsonify(holdings))
     return  (jsonify(holdings))
-
-@app.route('/stockinfo')
-def stock_info():
-    ticker = request.args.get('ticker')
-    stock_info = data_func.get_stock_info(ticker)
-    return stock_info # {'price', 'dividendYield', '52-wk-low', '52-wk-high', 'trailing_PE'}
-
-#Information on instruments currently in Portfolio
-@app.route('/portfolioinstrument/<string:instrumenttype>/<string:ticker>')
-def portfolio_equity(instrumenttype, ticker):
-    return jsonify()
 
 #Add new instrument to Portfolio
 @app.route('/addinstrument/<string:instrumenttype>')
@@ -130,12 +154,20 @@ def portfolio_del_equity(instrumenttype):
         return ({'status': 'fail - NOT IMPL',
                     'last_transaction': False})
 
-#Search for instrument
-@app.route('/searchinstrument/<string:instrumenttype>/', methods=['GET'])
-def search_equity():
+### ------ duplicate endpoint ------- 
+# #Search for instrument
+# @app.route('/searchinstrument/<string:instrumenttype>/', methods=['GET'])
+# def search_equity():
+#     ticker = request.args.get('ticker')
+#     stock_info = data_func.get_stock_info(ticker)
+#     return (stock_info)
+
+# TODO: check if the stock is in holdings and return the relevant info about it in holdings
+@app.route('/stockinfo')
+def stock_info():
     ticker = request.args.get('ticker')
     stock_info = data_func.get_stock_info(ticker)
-    return (stock_info)
+    return stock_info # {'price', 'dividendYield', '52-wk-low', '52-wk-high', 'trailing_PE'}
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
