@@ -5,7 +5,7 @@ from data import datafunctions as data_func
 app = Flask(__name__)
 CORS(app)
 
-# returns list of dictionary with keys: date, cash, bonds, stocks, total
+# returns list of dictionary with keys: date, cash, bonds, stocks, total --- holdings history
 @app.route('/portfoliooverview')
 def portfolio_overview():
     holdings_history = data_func.fetch_holdings_history()
@@ -83,8 +83,8 @@ def current_holdings():
             stock_info = data_func.get_stock_info(ticker)
             shares_owned = entry[4]
             market_value = round(shares_owned * stock_info['price'],2)
-            todays_return = round((stock_info['price']-stock_info['open'])/stock_info['open'], 2)
-            total_return = round((stock_info['price']-avg_price_paid)/avg_price_paid, 2)
+            todays_return = round(((stock_info['price']-stock_info['open'])/stock_info['open'])*100, 2)
+            total_return = round(((stock_info['price']-avg_price_paid)/avg_price_paid)*100, 2)
             p_l = round((shares_owned * stock_info['price']) - (shares_owned*avg_price_paid), 2)
             holding_dict = {
                 'ticker': ticker,
@@ -94,7 +94,7 @@ def current_holdings():
                 'currentPrice': stock_info['price'],    
                 'todaysReturns': todays_return,   # percentage  
                 'totalReturn': total_return, # percentage
-                'p/l': p_l # nominal total retrun
+                'p_l': p_l # nominal total retrun
             }
             holdings.append(holding_dict)
         elif instrument_type == 'bond':
@@ -173,14 +173,6 @@ def portfolio_del_equity(instrumenttype):
         return ({'status': 'fail - NOT IMPL',
                     'last_transaction': False})
 
-### ------ duplicate endpoint ------- 
-# #Search for instrument
-# @app.route('/searchinstrument/<string:instrumenttype>/', methods=['GET'])
-# def search_equity():
-#     ticker = request.args.get('ticker')
-#     stock_info = data_func.get_stock_info(ticker)
-#     return (stock_info)
-
 # returns stock info and relevant info if stock is in holding
 @app.route('/stockinfo')
 def stock_info():
@@ -194,9 +186,33 @@ def stock_info():
         stock_info['in_holdings'] = True
         stock_info['number_of_shares'] = in_holdings[4]
         stock_info['average_price_paid'] = in_holdings[5]
-        stock_info['p/l'] = round((in_holdings[4] * stock_info['price']) - (in_holdings[4]*in_holdings[5]), 2)
+        stock_info['p_l'] = round((in_holdings[4] * stock_info['price']) - (in_holdings[4]*in_holdings[5]), 2)
 
     return stock_info # {'price', 'dividendYield', '52-wk-low', '52-wk-high', 'trailing_PE', 'in_holding', 'number_of_shares', 'average_price_paid'}
+
+# returns stock info and relevant info if stock is in holding
+@app.route('/stockhistory')
+def stock_chart():
+    ticker = request.args.get('ticker')
+    period = request.args.get('period') # period options ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max']
+    stock_price_history = data_func.get_stock_price_history(ticker, period)
+    return stock_price_history # {'time_date_list', 'time_min_list', 'price_list'} --- time list is null based on intraday or not 
+
+# returns stock info and relevant info if stock is in holding
+@app.route('/marketOverview')
+def market_overview():
+    # get sp500
+    sp500_performance = data_func.get_stock_performance('^GSPC', ['YTD', '1d'])
+    # get NASDAQ
+    nasdaq_performance = data_func.get_stock_performance('^IXIC', ['YTD', '1d'])
+    # get DJI
+    dji_performance = data_func.get_stock_performance('^DJI', ['YTD', '1d'])
+    
+    return {
+        'sp500': sp500_performance,
+        'nasdaq': nasdaq_performance, 
+        'dow_jones': dji_performance
+    }
 
 # returns list of dictionary with keys: transaction_id, transaction_type, instrument_type, transaction_date, amount, ticker, volume, price, name, face_value, interest_rate
 @app.route('/transactions')
@@ -219,7 +235,6 @@ def transactions():
         }
         transactions_list.append(entry_dict)
     return jsonify(transactions_list)
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
