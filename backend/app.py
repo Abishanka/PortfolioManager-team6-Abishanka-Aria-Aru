@@ -83,6 +83,7 @@ def current_holdings():
             market_value = round(shares_owned * stock_info['price'],2)
             todays_return = round((stock_info['price']-stock_info['open'])/stock_info['open'], 2)
             total_return = round((stock_info['price']-avg_price_paid)/avg_price_paid, 2)
+            p_l = round((shares_owned * stock_info['price']) - (shares_owned*avg_price_paid), 2)
             holding_dict = {
                 'ticker': ticker,
                 'instrumentType': instrument_type,
@@ -91,6 +92,7 @@ def current_holdings():
                 'currentPrice': stock_info['price'],    
                 'todaysReturns': todays_return,   # percentage  
                 'totalReturn': total_return, # percentage
+                'p/l': p_l # nominal total retrun
             }
             holdings.append(holding_dict)
         elif instrument_type == 'bond':
@@ -190,9 +192,10 @@ def stock_info():
         stock_info['in_holdings'] = True
         stock_info['number_of_shares'] = in_holdings[4]
         stock_info['average_price_paid'] = in_holdings[5]
+        stock_info['p/l'] = round((in_holdings[4] * stock_info['price']) - (in_holdings[4]*in_holdings[5]), 2)
+
     return stock_info # {'price', 'dividendYield', '52-wk-low', '52-wk-high', 'trailing_PE', 'in_holding', 'number_of_shares', 'average_price_paid'}
 
-# TODO: make endpoint for transaction history
 # returns list of dictionary with keys: transaction_id, transaction_type, instrument_type, transaction_date, amount, ticker, volume, price, name, face_value, interest_rate
 @app.route('/transactions')
 def transactions():

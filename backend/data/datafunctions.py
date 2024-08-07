@@ -1,5 +1,7 @@
 import sqlite3
 import yfinance as yf
+from datetime import date, timedelta
+import random
 
 db_conn = sqlite3.connect('portfolio.db', check_same_thread=False)
 db_cursor = db_conn.cursor()
@@ -91,7 +93,7 @@ def createdb():
     ))
     db_cursor.execute(("""
     CREATE TABLE holdings_history (
-        date DATE PRIMARY KEY DEFAULT GETDATE,
+        date DATE PRIMARY KEY,
         cash DECIMAL(10,2) NOT NULL,
         bonds DECIMAL(10,2) NOT NULL,               
         stocks DECIMAL(10,2) NOT NULL
@@ -302,3 +304,25 @@ def remove_cash(amount):
     db_conn.commit()
     return ({'status': "success",
              'rows_impacted': db_cursor.rowcount})
+
+# TODO: create script to auto populate holdings history 
+
+# insert into holding table a cash row initialized to 0
+def insert_holdings_history_dummy():
+    start_date = date(2023, 1, 1)
+    end_date = date.today()
+    delta = timedelta(days=1)
+    cash = 300
+    stocks = 300 
+    bonds = 300
+    while start_date < end_date:
+        cash += random.randint(-100,400)
+        stocks += random.randint(-100,400)
+        bonds += random.randint(-100,400)
+        db_cursor.execute(f"""
+            INSERT INTO holdings_history (date, cash, bonds, stocks)
+            VALUES ('{start_date.strftime("%Y-%m-%d")}', {cash}, {bonds}, {stocks});
+            """ )
+        db_conn.commit()
+        start_date += delta
+
