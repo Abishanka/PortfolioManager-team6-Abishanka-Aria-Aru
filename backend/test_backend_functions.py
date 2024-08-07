@@ -45,3 +45,20 @@ last_stock_transaction = data_func.fetch_last_transaction('stocks')
 print({'status': 'success',
             'last_transaction': last_stock_transaction})
 # %%
+
+## HOLDINGS HISTORY
+holdings_history = data_func.fetch_holdings_history()
+# holdings history is list of tuple (date, cash, bonds, stocks)
+holdings_history_list = []
+for entry in holdings_history:
+    entry_dict = {
+        'date': entry[0],
+        'cash': entry[1],
+        'bonds': entry[2],
+        'stocks': entry[3],
+        'total': entry[1] + entry[2] + entry[3]
+    }
+    holdings_history_list.append(entry_dict)
+print ((holdings_history_list))
+
+# %%

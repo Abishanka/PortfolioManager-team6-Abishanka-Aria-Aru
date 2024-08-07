@@ -192,9 +192,10 @@ def stock_info():
         stock_info['in_holdings'] = True
         stock_info['number_of_shares'] = in_holdings[4]
         stock_info['average_price_paid'] = in_holdings[5]
+        stock_info['p/l'] = round((in_holdings[4] * stock_info['price']) - (in_holdings[4]*in_holdings[5]), 2)
+
     return stock_info # {'price', 'dividendYield', '52-wk-low', '52-wk-high', 'trailing_PE', 'in_holding', 'number_of_shares', 'average_price_paid'}
 
-# TODO: make endpoint for transaction history
 # returns list of dictionary with keys: transaction_id, transaction_type, instrument_type, transaction_date, amount, ticker, volume, price, name, face_value, interest_rate
 @app.route('/transactions')
 def transactions():
