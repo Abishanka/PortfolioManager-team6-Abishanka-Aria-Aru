@@ -4,8 +4,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
-import {NgbdModalStacked} from '../modal/modal.component';
-import { HoldingsService } from '../holdings.service'; // Adjust the import path as necessary
+import { HoldingsService } from '../holdings.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TradingModalComponent } from '../trading-modal/trading-modal.component';
 
 
 interface PortfolioInstrument {
@@ -22,7 +23,7 @@ interface PortfolioInstrument {
 @Component({
   selector: 'app-holdings',
   standalone: true,
-  imports: [LowerCasePipe, AsyncPipe, ReactiveFormsModule, NgbHighlight, CommonModule, NgbdModalStacked],
+  imports: [LowerCasePipe, AsyncPipe, ReactiveFormsModule, NgbHighlight, CommonModule],
   templateUrl: './holdings.component.html',
   styleUrl: './holdings.component.css',
   providers: [LowerCasePipe]
@@ -30,7 +31,7 @@ interface PortfolioInstrument {
 export class HoldingsComponent {
   portfolioinstruments$!: Observable<PortfolioInstrument[]>;
   
-  constructor(private holdingsService: HoldingsService) {}
+  constructor(private holdingsService: HoldingsService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.holdingsService.getPortfolio().subscribe(
@@ -43,5 +44,10 @@ export class HoldingsComponent {
 
   trackByName(index: number, instrument: PortfolioInstrument): string {
     return instrument.name;
+  }
+
+  openTradingModal(instrument: PortfolioInstrument): void {
+    const modalRef = this.modalService.open(TradingModalComponent);
+    modalRef.componentInstance.instrument = instrument;
   }
 }

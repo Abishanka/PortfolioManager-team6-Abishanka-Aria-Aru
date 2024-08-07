@@ -31,7 +31,7 @@
                 <td>{{instrument.currentPrice}}</td>
                 <td [ngClass]="{'negativeReturnTbl': instrument.todaysReturns < 0, 'positiveReturnTbl': instrument.todaysReturns >= 0}">{{instrument.todaysReturns}}</td>
                 <td [ngClass]="{'negativeReturnTbl': instrument.totalReturn < 0, 'positiveReturnTbl': instrument.totalReturn >= 0}">{{instrument.totalReturn}}</td>
-                <td><ngbd-modal-stacked></ngbd-modal-stacked></td>
+                <td><button class="btn btn-primary" (click)="openTradingModal(instrument)">Trade</button></td>
 
             </tr>
         }
