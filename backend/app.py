@@ -20,7 +20,9 @@ def portfolio_overview():
             'total': entry[1] + entry[2] + entry[3]
         }
         holdings_history_list.append(entry_dict)
-    return jsonify(holdings_history_list)
+    filtered_holdings_history_list = holdings_history_list[::20]
+
+    return jsonify(filtered_holdings_history_list)
 
 # call at 4 pm everyday -- saves current value of holdings into holdings_history table
 @app.route('/saveHoldings')
