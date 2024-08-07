@@ -35,12 +35,35 @@ def get_stock_info(ticker):
     }
     return return_info
 
-# returns a dataframe with the date as the index and close price in column 'Close'
+def get_stock_performance(ticker, range_list):
+    yf_ticker = yf.Ticker(ticker)
+    performance = {}
+    for range in range_list:
+        hist = yf_ticker.history(period=range)
+        metadata = yf_ticker.history_metadata
+        period_start_price = metadata['chartPreviousClose']
+        current_price = metadata['regularMarketPrice']
+        percent_return = round(((current_price-period_start_price)/period_start_price)*100, 2)
+        performance[range] = percent_return
+    return performance
+
+# returns a dictionary with fields time_date_list, time_min_list and price_list with correspond to lists of the respective values
+# time_min_list is for intraday chart and has times down to the minuet vs. time_date_list has granularity of day 
 # period options ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max']
 def get_stock_price_history(ticker, period):
-    yf_ticker = yf.Ticker(ticker)
-    price_hist_df = yf_ticker.history(period=period)
-    return price_hist_df['Close']
+    yf_ticker = yf.Ticker(ticker)   
+    if period != '1d':
+        price_hist_df = yf_ticker.history(period=period)
+        price_hist_df.reset_index(drop=False, inplace=True)
+        dates_list = price_hist_df['Date'].dt.strftime('%Y-%m-%d').to_list()
+        price_list = price_hist_df['Close'].to_list()
+        return {'time_date_list': dates_list, 'time_min_list': None, 'price_list': price_list}
+    else:
+        price_hist_df = yf_ticker.history(period=period, interval='1m')
+        price_hist_df.reset_index(drop=False, inplace=True)
+        min_list = price_hist_df['Datetime'].dt.strftime('%Y-%m-%d %H:%M').to_list()
+        price_list = price_hist_df['Close'].to_list()
+        return {'time_date_list': None, 'time_min_list': min_list, 'price_list': price_list}
 
 def createdb():
     db_cursor.execute((
@@ -304,8 +327,6 @@ def remove_cash(amount):
     db_conn.commit()
     return ({'status': "success",
              'rows_impacted': db_cursor.rowcount})
-
-# TODO: create script to auto populate holdings history 
 
 # insert into holding table a cash row initialized to 0
 def insert_holdings_history_dummy():
