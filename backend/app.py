@@ -83,6 +83,7 @@ def current_holdings():
             market_value = round(shares_owned * stock_info['price'],2)
             todays_return = round((stock_info['price']-stock_info['open'])/stock_info['open'], 2)
             total_return = round((stock_info['price']-avg_price_paid)/avg_price_paid, 2)
+            p_l = round((shares_owned * stock_info['price']) - (shares_owned*avg_price_paid), 2)
             holding_dict = {
                 'ticker': ticker,
                 'instrumentType': instrument_type,
@@ -91,6 +92,7 @@ def current_holdings():
                 'currentPrice': stock_info['price'],    
                 'todaysReturns': todays_return,   # percentage  
                 'totalReturn': total_return, # percentage
+                'p/l': p_l # nominal total retrun
             }
             holdings.append(holding_dict)
         elif instrument_type == 'bond':
