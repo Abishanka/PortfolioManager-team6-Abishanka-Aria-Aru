@@ -8,6 +8,10 @@ import { Observable, of } from 'rxjs';
 export class TradingModalService {
   private buyInstrumentUrl = 'http://127.0.0.1:5000/addinstrument/';
   private sellInstrumentUrl = 'http://127.0.0.1:5000/delinstrument/';
+  private stockHistoryUrl = 'http://127.0.0.1:5000/stockhistory';
+  private stockInfoUrl = 'http://127.0.0.1:5000/stockinfo';
+
+
   constructor(private http: HttpClient) { }
   buyInstrument(instrumenttype: string, ticker: string, amount: number): Observable<any> {
     if (instrumenttype == "stock") {
@@ -21,4 +25,14 @@ export class TradingModalService {
     }
     return of(null);
   }
+
+  getStockHistory(ticker: string, period: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.stockHistoryUrl}?ticker=${ticker}&period=${period}`);
+  }
+
+  getStockInfo(ticker: string): Observable<any[]> {  // Add this method
+    return this.http.get<any>(`${this.stockInfoUrl}?ticker=${ticker}`);
+  }
+
+
 }
