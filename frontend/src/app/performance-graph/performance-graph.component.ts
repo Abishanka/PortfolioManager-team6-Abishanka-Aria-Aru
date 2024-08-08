@@ -20,16 +20,14 @@ constructor(private graphDataService: PerformanceGraphService) {}
 ngOnInit() {
   this.graphDataService.getGraphData().subscribe(data =>
   {
-    console.log("List of holdings history"),
-
-
     this.chartOptions =
     {
       data: data,
       series: [
-        { type: 'line',
+        { type: 'area',
           xKey: 'date',
-          yKey: 'total'
+          yKey: 'total',
+          fill: 'darkgreen'
         }
       ]
     };
