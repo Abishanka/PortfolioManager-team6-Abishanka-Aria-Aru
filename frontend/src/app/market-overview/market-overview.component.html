@@ -11,18 +11,18 @@
     <tbody>
     <tr>
       <td>SP500</td>
-      <td [ngClass]="{'negativeReturnTbl': marketData.sp500.YTD < 0, 'positiveReturnTbl': marketData.sp500.YTD >= 0}">{{ marketData.sp500.YTD }}</td>
-      <td [ngClass]="{'negativeReturnTbl': marketData.sp500['1d'] < 0, 'positiveReturnTbl': marketData.sp500['1d'] >= 0}">{{ marketData.sp500['1d'] }}</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.sp500.YTD < 0, 'positiveReturnTbl': marketData.sp500.YTD >= 0}">{{ marketData.sp500.YTD }}%</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.sp500['1d'] < 0, 'positiveReturnTbl': marketData.sp500['1d'] >= 0}">{{ marketData.sp500['1d'] }}%</td>
     </tr>
     <tr>
       <td>NASDAQ</td>
-      <td [ngClass]="{'negativeReturnTbl': marketData.nasdaq.YTD < 0, 'positiveReturnTbl': marketData.nasdaq.YTD >= 0}">{{ marketData.nasdaq.YTD }}</td>
-      <td [ngClass]="{'negativeReturnTbl': marketData.nasdaq['1d'] < 0, 'positiveReturnTbl': marketData.nasdaq['1d'] >= 0}">{{ marketData.nasdaq['1d'] }}</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.nasdaq.YTD < 0, 'positiveReturnTbl': marketData.nasdaq.YTD >= 0}">{{ marketData.nasdaq.YTD }}%</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.nasdaq['1d'] < 0, 'positiveReturnTbl': marketData.nasdaq['1d'] >= 0}">{{ marketData.nasdaq['1d'] }}%</td>
     </tr>
     <tr>
       <td>DJI</td>
-      <td [ngClass]="{'negativeReturnTbl': marketData.dow_jones.YTD < 0, 'positiveReturnTbl': marketData.dow_jones.YTD >= 0}">{{ marketData.dow_jones.YTD }}</td>
-      <td [ngClass]="{'negativeReturnTbl': marketData.dow_jones['1d'] < 0, 'positiveReturnTbl': marketData.dow_jones['1d'] >= 0}">{{ marketData.dow_jones['1d'] }}</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.dow_jones.YTD < 0, 'positiveReturnTbl': marketData.dow_jones.YTD >= 0}">{{ marketData.dow_jones.YTD }}%</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.dow_jones['1d'] < 0, 'positiveReturnTbl': marketData.dow_jones['1d'] >= 0}">{{ marketData.dow_jones['1d'] }}%</td>
     </tr>
     </tbody>
   </table>
