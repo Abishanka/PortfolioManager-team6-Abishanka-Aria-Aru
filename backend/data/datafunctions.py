@@ -198,6 +198,24 @@ def fetch_current_holdings():
         lock.release()
     return results 
 
+def fetch_net_cash_deposits():
+    try:
+        lock.acquire(True)
+        db_cursor.execute(f"""
+            SELECT 
+                SUM(
+                    CASE 
+                        WHEN transaction_type = 'sell' THEN -amount
+                        ELSE amount
+                    END
+                ) AS account_balance
+            FROM transactions;
+            """)
+        results = db_cursor.fetchone()
+    finally:
+        lock.release()
+    return results 
+
 def insert_holdings_history(cash_sum, bonds_sum, stocks_sum):
     # insert row into holdings history  
     db_cursor.execute(f"""
@@ -264,7 +282,7 @@ def buy_stock(ticker, num_shares, price):
         # insert purchase into stocks table
         db_cursor.execute(f"""
         INSERT INTO stocks (transaction_id, ticker, volume, price)
-        VALUES (last_insert_rowid() , '{ticker}', {num_shares}, {price});
+        VALUES (LAST_INSERT_ID() , '{ticker}', {num_shares}, {price});
         """  )
         db_conn.commit()
         # insert row into holdings if row for ticker does not exist 
@@ -317,7 +335,7 @@ def sell_stock(ticker, num_shares, price):
         # insert sale into stocks table
         db_cursor.execute(f"""
         INSERT INTO stocks (transaction_id, ticker, volume, price)
-        VALUES (last_insert_rowid() , '{ticker}', {num_shares}, {price});
+        VALUES (LAST_INSERT_ID() , '{ticker}', {num_shares}, {price});
         """  )
         db_conn.commit()
         # updates values in holding table 
@@ -367,7 +385,7 @@ def add_cash(amount):
         # add to cash table 
         db_cursor.execute(f"""
         INSERT INTO cash (transaction_id, amount)
-        VALUES (last_insert_rowid(), {amount});
+        VALUES (LAST_INSERT_ID(), {amount});
         """ )
         db_conn.commit()
     finally:
@@ -394,7 +412,7 @@ def remove_cash(amount):
         # add to cash table 
         db_cursor.execute(f"""
         INSERT INTO cash (transaction_id, amount)
-        VALUES (last_inset_rowid(), {amount});
+        VALUES (LAST_INSERT_ID(), {amount});
         """ )
         db_conn.commit()
     finally:
