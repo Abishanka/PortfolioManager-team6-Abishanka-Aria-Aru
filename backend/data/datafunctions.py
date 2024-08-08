@@ -292,7 +292,7 @@ def sell_stock(ticker, num_shares, price):
         # insert sale into stocks table
         db_cursor.execute(f"""
         INSERT INTO stocks (transaction_id, ticker, volume, price)
-        VALUES (last_inset_rowid() , '{ticker}', {num_shares}, {price});
+        VALUES (last_insert_rowid() , '{ticker}', {num_shares}, {price});
         """  )
         db_conn.commit()
         # updates values in holding table 
@@ -312,7 +312,7 @@ def sell_stock(ticker, num_shares, price):
         db_cursor.execute(f"""
         UPDATE current_holdings
         SET amount = amount + ({num_shares} * {price})
-        WHERE instrument_type = cash;
+        WHERE instrument_type = 'cash';
         """)
         db_conn.commit()
     finally:

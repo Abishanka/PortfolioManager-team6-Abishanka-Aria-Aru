@@ -35,7 +35,7 @@ print({'status': 'success', 'last_transaction': last_cash_transaction})
 # %%
 ## BUY STOCK
 
-ticker = 'TSLA'
+ticker = 'AAPL'
 amount = 8
 
 stock_info = data_func.get_stock_info(ticker)
@@ -45,7 +45,43 @@ last_stock_transaction = data_func.fetch_last_transaction('stocks')
 print({'status': 'success',
             'last_transaction': last_stock_transaction})
 # %%
+## SELL STOCK
+amount = 1
+instrumenttype = 'stock'
+ticker_in = 'TSLA'
 
+if instrumenttype == 'stock':
+    # get current stock price
+    ticker = ticker_in
+    stock_info = data_func.get_stock_info(ticker)
+    price = stock_info['price']
+    data_func.sell_stock(ticker, amount, price)
+    last_stock_transaction = data_func.fetch_last_transaction('stocks')
+    if (last_stock_transaction[2] != ticker and last_stock_transaction[3] != amount):
+        print ({'status': 'fail',
+                'last_transaction': last_stock_transaction})
+    print ({'status': 'success',
+                'last_transaction': last_stock_transaction})
+elif instrumenttype == 'cash':
+    data_func.remove_cash(amount)
+    last_cash_transaction = data_func.fetch_last_transaction('cash')
+    if (last_cash_transaction[2] != amount):
+        print( {'status': 'fail',
+                'last_transaction': last_cash_transaction})
+    print ({'status': 'success',
+                'last_transaction': last_cash_transaction})
+else:
+    # TODO: NOT IMPLEMENTED BOND 
+    print ({'status': 'fail - NOT IMPL',
+                'last_transaction': False})
+
+
+
+
+
+
+
+#%%
 ## HOLDINGS HISTORY
 holdings_history = data_func.fetch_holdings_history()
 # holdings history is list of tuple (date, cash, bonds, stocks)
