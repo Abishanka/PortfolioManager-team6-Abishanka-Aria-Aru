@@ -38,7 +38,7 @@ ngOnInit() {
             innerRadiusRatio: 0.8,
             innerLabels: [
               {
-                  text: `Total Investments: \n $ ${data.stock+data.bond+data.cash}`,
+                  text: `Total Investments: \n $ ${Number((data.stock+data.bond+data.cash).toFixed(3))}`,
                   spacing: 4,
                   fontSize: 10,
                   color: 'black',

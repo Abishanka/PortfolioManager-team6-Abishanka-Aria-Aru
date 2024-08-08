@@ -1,5 +1,5 @@
 <div class="search-container">
-    <input type="text" [formControl]="searchControl" placeholder="Search instruments..." class="search-input" (keyup.enter)="onSubmit()"/>
+    <input type="text" placeholder="Search instruments..." class="search-input" [(ngModel)]="tickerInput" (keyup.enter)="trade(tickerInput)"/>
   
     <!-- <ul *ngIf="results$ | async as results" class="dropdown-menu">
       <li *ngFor="let result of results" class="dropdown-item">
