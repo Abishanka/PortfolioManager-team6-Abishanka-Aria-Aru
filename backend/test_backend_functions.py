@@ -28,7 +28,7 @@ print ({
 })
 # %%
 # ADD CASH
-amount = 900
+amount = 100
 data_func.add_cash(amount)
 last_cash_transaction = data_func.fetch_last_transaction('cash')
 print({'status': 'success', 'last_transaction': last_cash_transaction})
