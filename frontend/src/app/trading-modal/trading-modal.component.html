@@ -18,20 +18,20 @@
         </div>
         <div class="col">
             <div class="row mb-2 mt-2 center d-flex p-2 justify-content-center">
-                Current Price: ${{ instrument.currentPrice }}
+                Current Price: ${{ stockInfo.price }}
             </div>
             <div class="row mt-3">
                 <table class="table table-bordered mt-10">
                     <tbody>
                         <tr>
-                        <td>Shares Owned <br> {{ stockInfo.number_of_shares}}</td>
-                        <td>Average Cost <br> {{ stockInfo.average_price_paid}}</td>
+                        <td>Shares Owned <br> {{ stockInfo.number_of_shares > 0 ? stockInfo.number_of_shares : '-'}}</td>
+                        <td>Average Cost <br> {{ stockInfo.average_price_paid > 0 ? stockInfo.average_price_paid : '-'}}</td>
                         <td>52 Week High <br> {{ stockInfo['52-wk-high']}}</td>
                         <td>Trailing P/E Ratio <br> {{ stockInfo.trailing_PE}}</td>
                         </tr>
                         <tr>
-                        <td>Total Return <br> {{ stockInfo.p_l}}</td>
-                        <td>% of Portfolio <br> {{ stockInfo.in_holding ? 'Yes' : 'No' }}</td>
+                        <td>Profil/Loss <br> ${{ stockInfo.p_l  > 0 ? stockInfo.p_l : '0'}}</td>
+                        <td>% of Portfolio <br> {{ stockInfo.number_of_shares > 0 ? (stockInfo.number_of_shares * stockInfo.average_price_paid / totalPortfolioValue * 100) : '-' }}%</td>
                         <td>52 Week Low <br> {{ stockInfo['52-wk-low']}}</td>
                         <td>30-Day Div Yield <br> {{ stockInfo.dividendYield}}</td>
                         </tr>

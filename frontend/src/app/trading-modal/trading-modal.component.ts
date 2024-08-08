@@ -7,6 +7,7 @@ import { AgChartOptions } from 'ag-charts-community';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { catchError, of } from 'rxjs';
+import { SharedDataService } from '../shared-data.service';
 
 interface PortfolioInstrument {
   name: string;
@@ -49,14 +50,15 @@ export class TradingModalComponent {
   stockInfo: any = {}; // Add this to hold stock information
 
 
-constructor(private tradingService: TradingModalService, public activeModal: NgbActiveModal) {  }
-
+constructor(private tradingService: TradingModalService, public activeModal: NgbActiveModal, private sharedDataService: SharedDataService) {  }
+  totalPortfolioValue: number = 0
   ngOnInit(): void {
-  if (this.instrument) {
-    this.updateChart(this.selectedPeriod);
-    this.fetchStockInfo();
+    this.sharedDataService.cashAvailable.subscribe(data => this.totalPortfolioValue = Number(data.toFixed(3)));
+    if (this.instrument) {
+      this.updateChart(this.selectedPeriod);
+      this.fetchStockInfo();
+    }
   }
-}
   ngOnChanges(changes: SimpleChanges): void {
       if (changes['instrument'] && this.instrument) {
         this.updateChart(this.selectedPeriod);
@@ -64,6 +66,7 @@ constructor(private tradingService: TradingModalService, public activeModal: Ngb
     }
 
   buyInstrument(instrumentType: string, ticker: string, amount: number): void {
+    console.log(instrumentType, ticker, amount)
     this.tradingService.buyInstrument(instrumentType, ticker, amount).subscribe(response => {
       console.log(response);
     });
