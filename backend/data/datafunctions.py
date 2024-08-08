@@ -142,7 +142,6 @@ def createdb():
     """ )
     db_conn.commit()
     
-
 def fetch_investment_summary():
     pass
 
@@ -227,7 +226,7 @@ def fetch_stock_in_current_holdings(ticker):
         lock.acquire(True)
         db_cursor.execute(f"""
             SELECT * FROM current_holdings
-            WHERE ticker = {ticker}
+            WHERE ticker = '{ticker}'
             """)
         results = db_cursor.fetchone()
     finally:
@@ -237,6 +236,14 @@ def fetch_stock_in_current_holdings(ticker):
 def buy_stock(ticker, num_shares, price):
     try:
         lock.acquire(True)
+        # check how much cash you have and ensure you cant spend more than what you have 
+        db_cursor.execute(f"""
+            SELECT * FROM current_holdings
+            WHERE instrument_type = 'cash'
+            """)
+        current_holdings_cash_query = db_cursor.fetchone()
+        if (current_holdings_cash_query == None or len(current_holdings_cash_query) == 0 or current_holdings_cash_query[7] < (num_shares*price)):
+            return ({'status': "Fail"})
         # insert transaction into transaction table
         db_cursor.execute(f"""
         INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
@@ -273,8 +280,7 @@ def buy_stock(ticker, num_shares, price):
         db_conn.commit()
     finally:
         lock.release()
-    return ({'status': "success",
-             'rows_impacted': db_cursor.rowcount})
+    return ({'status': "success"})
 
 def buy_bond():
     pass
@@ -282,6 +288,14 @@ def buy_bond():
 def sell_stock(ticker, num_shares, price):
     try:
         lock.acquire(True)
+        # check how many stocks you currently have and ensure cant sell more than you have
+        db_cursor.execute(f"""
+            SELECT * FROM current_holdings
+            WHERE ticker = {ticker}
+            """)
+        current_holdings_stock_query = db_cursor.fetchone()
+        if (current_holdings_stock_query == None or len(current_holdings_stock_query) == 0 or current_holdings_stock_query[4] < num_shares):
+            return ({'status': "Fail"})
         # insert transaction into transaction table
         db_cursor.execute(f"""
         INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
@@ -316,8 +330,7 @@ def sell_stock(ticker, num_shares, price):
         db_conn.commit()
     finally:
         lock.release()
-    return ({'status': "success",
-             'rows_impacted': db_cursor.rowcount})
+    return ({'status': "success"})
     
 
 def sell_bond():

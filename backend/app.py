@@ -64,9 +64,9 @@ def current_holdings_sum():
             case _:
                 pass
     return ({
-        'cash': cash_sum,
-        'bond': bonds_sum,
-        'stock': stocks_sum
+        'cash': round(cash_sum, 2),
+        'bond': round(bonds_sum, 2),
+        'stock': round(stocks_sum, 2)
     })
 
 # returns list of dictionary of current holdings 

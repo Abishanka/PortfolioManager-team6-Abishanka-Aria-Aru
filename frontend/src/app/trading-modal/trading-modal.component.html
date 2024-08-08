@@ -4,9 +4,17 @@
         <h5 class="modal-title w-100 text-center m-4">{{ instrument.ticker }}</h5>
         <div class="row">
         <div class="col">
-            <div class="col">
-                <div class="graph-placeholder" style="height: 195px; border: 1px solid #ddd;">Graph</div>
-            </div>
+          <div class="form-group">
+            <label for="period">Select Period:</label>
+            <select id="period" class="form-control" [(ngModel)]="selectedPeriod" (change)="onPeriodChange(selectedPeriod)">
+              <option *ngFor="let period of periods" [value]="period">{{ period }}</option>
+            </select>
+          </div>
+          <div class="graph-placeholder" style=" height: 195px; border: 1px solid #ddd;">
+            <ag-charts
+              [options]="chartOptions">
+            </ag-charts>
+          </div>
         </div>
         <div class="col">
             <div class="row mb-2 mt-2 center d-flex p-2 justify-content-center">
@@ -16,16 +24,16 @@
                 <table class="table table-bordered mt-10">
                     <tbody>
                         <tr>
-                        <td>Shares Owned</td>
-                        <td>Average Cost</td>
-                        <td>52 Week High</td>
-                        <td>Trailing P/E Ratio</td>
+                        <td>Shares Owned <br> {{ stockInfo.number_of_shares}}</td>
+                        <td>Average Cost <br> {{ stockInfo.average_price_paid}}</td>
+                        <td>52 Week High <br> {{ stockInfo['52-wk-high']}}</td>
+                        <td>Trailing P/E Ratio <br> {{ stockInfo.trailing_PE}}</td>
                         </tr>
                         <tr>
-                        <td>Total Return</td>
-                        <td>% of Portfolio</td>
-                        <td>52 Week Low</td>
-                        <td>30-Day Div Yield</td>
+                        <td>Total Return <br> {{ stockInfo.p_l}}</td>
+                        <td>% of Portfolio <br> {{ stockInfo.in_holding ? 'Yes' : 'No' }}</td>
+                        <td>52 Week Low <br> {{ stockInfo['52-wk-low']}}</td>
+                        <td>30-Day Div Yield <br> {{ stockInfo.dividendYield}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -48,4 +56,3 @@
       </div>
   </div>
 </div>
-  
