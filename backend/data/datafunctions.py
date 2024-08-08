@@ -226,7 +226,7 @@ def fetch_stock_in_current_holdings(ticker):
         lock.acquire(True)
         db_cursor.execute(f"""
             SELECT * FROM current_holdings
-            WHERE ticker = {ticker}
+            WHERE ticker = '{ticker}'
             """)
         results = db_cursor.fetchone()
     finally:
