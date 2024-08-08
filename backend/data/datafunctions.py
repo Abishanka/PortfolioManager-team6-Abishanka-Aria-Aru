@@ -252,7 +252,7 @@ def buy_stock(ticker, num_shares, price):
             WHERE instrument_type = 'cash'
             """)
         current_holdings_cash_query = db_cursor.fetchone()
-        if (current_holdings_cash_query == None or len(current_holdings_cash_query) == 0 or current_holdings_cash_query[7] < (num_shares*price)):
+        if (current_holdings_cash_query == None or len(current_holdings_cash_query) == 0 or current_holdings_cash_query[7] < (float(num_shares)*price)):
             return ({'status': "Fail"})
         # insert transaction into transaction table
         db_cursor.execute(f"""
@@ -301,10 +301,11 @@ def sell_stock(ticker, num_shares, price):
         # check how many stocks you currently have and ensure cant sell more than you have
         db_cursor.execute(f"""
             SELECT * FROM current_holdings
-            WHERE ticker = {ticker}
+            WHERE ticker = '{ticker}'
             """)
         current_holdings_stock_query = db_cursor.fetchone()
-        if (current_holdings_stock_query == None or len(current_holdings_stock_query) == 0 or current_holdings_stock_query[4] < num_shares):
+        print(num_shares)
+        if (current_holdings_stock_query == None or len(current_holdings_stock_query) == 0 or current_holdings_stock_query[4] < int(num_shares)):
             return ({'status': "Fail"})
         # insert transaction into transaction table
         db_cursor.execute(f"""

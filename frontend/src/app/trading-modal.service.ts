@@ -30,7 +30,7 @@ export class TradingModalService {
     return this.http.get<any[]>(`${this.stockHistoryUrl}?ticker=${ticker}&period=${period}`);
   }
 
-  getStockInfo(ticker: string): Observable<any[]> {  // Add this method
+  getStockInfo(ticker: string): Observable<any[]> {
     return this.http.get<any>(`${this.stockInfoUrl}?ticker=${ticker}`);
   }
 
