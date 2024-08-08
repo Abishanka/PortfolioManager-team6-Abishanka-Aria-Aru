@@ -23,4 +23,7 @@ constructor(private modalService: NgbModal) { }
   public open(modal: any): void {
     this.modalService.open(modal);
   }
+  openFundsModal(): void {
+    const modalRef = this.modalService.open(FundsComponent);
+  }
 }

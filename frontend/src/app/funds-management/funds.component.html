@@ -1,6 +1,32 @@
-<div class="feature col button-center"  style="display: flex; align-items: center;
-  justify-content: right;">
-  <button (click)="openXl()">
-    Manage Funds
-  </button>
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+<div class="modal-header">
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="container px-4">
+  <!-- <h2 class="pb-2 "> {{name}}</h2> -->
+  <div class="row row-cols-1 row-cols-md-2 align-items-md-center py-5">
+    <div class="col d-flex flex-column align-items-start gap-2">
+      <div class="row row-cols-1 row-cols-m-2">
+        <app-investment-graph></app-investment-graph>
+      </div>
+    </div>
+    <div class="col d-flex flex-column align-items-start">
+      <h6 style="display: block; text-align: center;">Available Funds: $15,000.02</h6>
+
+    </div>
+  </div>
+  <div class="row align-items-md-center g-5 py-5">
+        <div class="input-group mb-2">
+          <label for="amountInput">Amount to Deposit/Withdraw</label>
+          <input type="number" class="form-control" placeholder="Enter Amount in Dollars" id="amountInput" [(ngModel)]="amount">
+        </div>
+    <div class="col d-flex flex-column align-items-start gap-2">
+      <p><button type="submit" class="btn btn-primary mb-2" (click)="depositCash(amount)">Deposit</button></p>
+      <p><button type="submit" class="btn btn-primary mb-2" (click)="withdrawCash(amount)">Withdraw</button></p>
+    </div>
+  </div>
+</div>
+</div>
 </div>
