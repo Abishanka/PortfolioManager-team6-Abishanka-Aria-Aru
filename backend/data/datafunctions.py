@@ -6,17 +6,18 @@ import threading
 import mysql.connector
 from mysql.connector import Error
 
-db_conn = sqlite3.connect('portfolio.db', check_same_thread=False)
-db_cursor = db_conn.cursor()
+# db_conn = sqlite3.connect('portfolio.db', check_same_thread=False)
+# db_cursor = db_conn.cursor()
 lock = threading.Lock()
 
-# db_conn =  mysql.connector.connect(
-#                 host='localhost',
-#                 database='your_database_name',
-#                 user='your_username',
-#                 password='your_password'
-#             )
-# db_cursor = db_conn.cursor()
+db_conn =  mysql.connector.connect(
+                host='127.0.0.1',
+                port=3306,
+                user='root',
+                password='toor',
+                database='portfoliomanagertap'
+            )
+db_cursor = db_conn.cursor()
 
 # returns a dictionary of the relevant info needed for front end stock info 
 # if stock does not have dividend, yield is '-'
