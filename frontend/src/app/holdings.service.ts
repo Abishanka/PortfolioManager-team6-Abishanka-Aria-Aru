@@ -11,6 +11,7 @@ interface PortfolioInstrument {
   currentPrice: number;    
   todaysReturns: number;    
   totalReturn: number;
+  p_l: number;
 }
 
 @Injectable({
