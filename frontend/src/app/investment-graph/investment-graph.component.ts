@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AgCharts } from 'ag-charts-angular';
 import { AgChartOptions } from 'ag-charts-community';
 import { InvestmentGraphDataService } from '../investment-graph-data.service'
+import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-investment-graph',
@@ -17,12 +18,9 @@ public chartOptions: AgChartOptions = {
   data: [],
   series: []
 };
-constructor(private graphDataService: InvestmentGraphDataService) {}
+constructor(private graphDataService: InvestmentGraphDataService, private sharedDataService: SharedDataService) {}
 ngOnInit() {
   this.graphDataService.getGraphData().subscribe(data => {
-      console.log(data.stock)
-      console.log(data.bond)
-      console.log(data.cash)
       this.chartOptions = {
         data: [
           { asset: "Stocks", amount: data.stock },
@@ -49,6 +47,7 @@ ngOnInit() {
           },
         ],
       };
+      this.sharedDataService.updateCashAvailable(data.cash)
     }
   )};
 }

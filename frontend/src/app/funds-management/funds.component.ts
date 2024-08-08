@@ -4,59 +4,38 @@ import { JsonPipe } from '@angular/common';
 import { NgbActiveModal, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { InvestmentsComponent } from '../investment-graph/investment-graph.component';
-
-@Component({
-  selector: 'app-funds',
-  standalone: true,
-  imports: [FormsModule, JsonPipe, InvestmentsComponent],
-  templateUrl: './funds-modal.html',
-  styleUrl: './funds.component.css'
-})
-export class NgbdFunds1Content {
-  private modalService = inject(NgbModal);
-  activeModal = inject(NgbActiveModal);
-
-  openXl() {
-      this.modalService.open(NgbdFunds2Content, { size: 'xl' });
-    }
-  openLg() {
-		this.modalService.open(NgbdFunds2Content, { size: 'lg' });
-	}
-  @Input() name: string = '';
-}
-
-@Component({
-  standalone: true,
-  imports: [FormsModule, JsonPipe, InvestmentsComponent],
-  templateUrl: './funds-transaction-approval.html',
-})
-
-export class NgbdFunds2Content {
-  activeModal = inject(NgbActiveModal);
-}
+import { FundsModalService } from '../funds-modal.service';
+import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-funds',
   standalone: true,
   imports: [FormsModule, JsonPipe, InvestmentsComponent],
   templateUrl: './funds.component.html',
+  styleUrl: './funds.component.css'
 })
 export class FundsComponent {
-  private modalService = inject(NgbModal);
-  modalsNumber = 0;
+  amount: number = 0;
+  cashAvailable: number = 0
+  constructor(private fundsService: FundsModalService, public activeModal: NgbActiveModal, private sharedDataService: SharedDataService) {  }
 
-  constructor() {
-    this.modalService.activeInstances.pipe(takeUntilDestroyed()).subscribe((list) => {
-      this.modalsNumber = list.length;
+  ngOnInit() {
+    this.sharedDataService.cashAvailable.subscribe(data => this.cashAvailable = Number(data.toFixed(3)));
+  }
+  depositCash(amount: number): void {
+    this.fundsService.depositCash(amount).subscribe(response => {
+      console.log(response);
+    });
+  }
+  withdrawCash(amount: number): void {
+    this.fundsService.withdrawCash(amount).subscribe(response => {
+      console.log(response);
     });
   }
 
-  openXl() {
-      this.modalService.open(NgbdFunds1Content, { size: 'xl' });
-    }
-  openLg() {
-		this.modalService.open(NgbdFunds1Content, { size: 'lg' });
-	}
+  closeModal(): void {
+    this.activeModal.close();
+  }
 }
 
 
