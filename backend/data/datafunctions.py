@@ -92,7 +92,7 @@ def get_stock_price_history(ticker, period):
 def createdb():
     db_cursor.execute((
         "CREATE TABLE transactions ("
-            "transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "transaction_id INTEGER PRIMARY KEY AUTO_INCREMENT,"
             "transaction_type TEXT NOT NULL CHECK (transaction_type IN ('buy', 'sell')),"
             "instrument_type TEXT NOT NULL CHECK (instrument_type IN ('stock', 'bond', 'cash')),"
             "transaction_date DATE NOT NULL"
@@ -100,7 +100,7 @@ def createdb():
     ))
     db_cursor.execute((
         "CREATE TABLE stocks ("
-            "stock_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "stock_id INTEGER PRIMARY KEY AUTO_INCREMENT,"
             "transaction_id INTEGER NOT NULL,"
             "ticker TEXT NOT NULL,"
             "volume INTEGER NOT NULL,"
@@ -110,7 +110,7 @@ def createdb():
     ))
     db_cursor.execute((
         "CREATE TABLE bonds ("
-            "bond_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "bond_id INTEGER PRIMARY KEY AUTO_INCREMENT,"
             "transaction_id INTEGER NOT NULL,"
             "name TEXT NOT NULL,"
             "face_value DECIMAL(10, 2) NOT NULL,"
@@ -120,7 +120,7 @@ def createdb():
     ))
     db_cursor.execute((
         "CREATE TABLE cash ("
-            "cash_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "cash_id INTEGER PRIMARY KEY AUTO_INCREMENT,"
             "transaction_id INTEGER NOT NULL,"
             "amount DECIMAL(10, 2) NOT NULL,"
             "FOREIGN KEY (transaction_id) REFERENCES transactions (transaction_id)"
@@ -128,7 +128,7 @@ def createdb():
     ))
     db_cursor.execute(("""
     CREATE TABLE current_holdings (
-        holding_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        holding_id INTEGER PRIMARY KEY AUTO_INCREMENT,
         instrument_type TEXT NOT NULL CHECK (instrument_type IN ('stock', 'bond', 'cash')),
         ticker TEXT,
         name TEXT,
@@ -258,7 +258,7 @@ def buy_stock(ticker, num_shares, price):
         # insert transaction into transaction table
         db_cursor.execute(f"""
         INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
-        VALUES ('buy' ,'stock', DATE('now'));
+        VALUES ('buy' ,'stock', NOW());
         """ )
         db_conn.commit()
         # insert purchase into stocks table
@@ -311,7 +311,7 @@ def sell_stock(ticker, num_shares, price):
         # insert transaction into transaction table
         db_cursor.execute(f"""
         INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
-        VALUES ('sell' ,'stock', DATE('now'));
+        VALUES ('sell' ,'stock', NOW());
         """ )
         db_conn.commit()
         # insert sale into stocks table
@@ -361,7 +361,7 @@ def add_cash(amount):
         # add to transaction table
         db_cursor.execute(f"""
         INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
-        VALUES ('buy' ,'cash', DATE('now'));
+        VALUES ('buy' ,'cash', NOW());
         """ )
         db_conn.commit()
         # add to cash table 
@@ -388,7 +388,7 @@ def remove_cash(amount):
         # add to transaction table
         db_cursor.execute(f"""
         INSERT INTO transactions (transaction_type, instrument_type, transaction_date)
-        VALUES ('sell' ,'cash', DATE('now'));
+        VALUES ('sell' ,'cash', NOW());
         """ )
         db_conn.commit()
         # add to cash table 
