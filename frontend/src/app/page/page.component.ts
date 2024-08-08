@@ -7,6 +7,7 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HoldingsComponent } from '../holdings/holdings.component';
 import { GloalSearchComponent } from '../gloal-search/gloal-search.component';
 import { FundsComponent } from '../funds-management/funds.component';
+import { SharedDataService } from '../shared-data.service';
 
 
 
@@ -18,10 +19,11 @@ import { FundsComponent } from '../funds-management/funds.component';
   styleUrl: './page.component.css'
 })
 export class PageComponent {
-constructor(private modalService: NgbModal) { }
+  cashAvailable: number = 0
+  constructor(private modalService: NgbModal, private sharedDataService: SharedDataService) { }
 
-  public open(modal: any): void {
-    this.modalService.open(modal);
+  ngOnInit() {
+    this.sharedDataService.cashAvailable.subscribe(data => this.cashAvailable = Number(data.toFixed(3)));
   }
   openFundsModal(): void {
     const modalRef = this.modalService.open(FundsComponent);

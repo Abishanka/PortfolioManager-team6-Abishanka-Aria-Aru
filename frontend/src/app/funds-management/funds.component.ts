@@ -5,6 +5,7 @@ import { NgbActiveModal, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { InvestmentsComponent } from '../investment-graph/investment-graph.component';
 import { FundsModalService } from '../funds-modal.service';
+import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-funds',
@@ -15,9 +16,12 @@ import { FundsModalService } from '../funds-modal.service';
 })
 export class FundsComponent {
   amount: number = 0;
+  cashAvailable: number = 0
+  constructor(private fundsService: FundsModalService, public activeModal: NgbActiveModal, private sharedDataService: SharedDataService) {  }
 
-  constructor(private fundsService: FundsModalService, public activeModal: NgbActiveModal) {  }
-
+  ngOnInit() {
+    this.sharedDataService.cashAvailable.subscribe(data => this.cashAvailable = Number(data.toFixed(3)));
+  }
   depositCash(amount: number): void {
     this.fundsService.depositCash(amount).subscribe(response => {
       console.log(response);
