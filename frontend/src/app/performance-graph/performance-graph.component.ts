@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { group } from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
 import { AgCharts } from 'ag-charts-angular';
 import { AgChartOptions } from 'ag-charts-community';
+import { PerformanceGraphService } from '../performance-graph.service'
 
 @Component({
   selector: 'app-performance-graph',
@@ -10,20 +12,28 @@ import { AgChartOptions } from 'ag-charts-community';
   styleUrl: './performance-graph.component.css'
 })
 export class PerformanceGraphComponent {
-public chartOptions: AgChartOptions;
-constructor() {
-    this.chartOptions = {
-      // Data: Data to be displayed in the chart
-      data: [
-        { month: 'Jan', netWorth: 2.3, portfolioNet: 162000 },
-        { month: 'Mar', netWorth: 6.3, portfolioNet: 302000 },
-        { month: 'May', netWorth: 16.2, portfolioNet: 800000 },
-        { month: 'Jul', netWorth: 22.8, portfolioNet: 1254000 },
-        { month: 'Sep', netWorth: 14.5, portfolioNet: 950000 },
-        { month: 'Nov', netWorth: 8.9, portfolioNet: 200000 },
-      ],
-      // Series: Defines which chart type and data to use
-      series: [{ type: 'line', xKey: 'month', yKey: 'portfolioNet' }]
+public chartOptions: AgChartOptions={
+  data: [],
+  series: []
+};
+constructor(private graphDataService: PerformanceGraphService) {}
+ngOnInit() {
+  this.graphDataService.getGraphData().subscribe(data =>
+  {
+    console.log("List of holdings history"),
+
+
+    this.chartOptions =
+    {
+      data: data,
+      series: [
+        { type: 'line',
+          xKey: 'date',
+          yKey: 'total'
+        }
+      ]
     };
   }
+  )};
 }
+

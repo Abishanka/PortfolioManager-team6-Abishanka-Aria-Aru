@@ -1,33 +1,28 @@
-<head>
-  <link href="../page/page.component.css" rel="stylesheet">
-  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
-<!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">-->
-  <script src="../page/page.component.js"></script>
-</head>
-<div class="table-responsive small">
-  <table class="table table-striped table-sm">
+<div class="market-overview">
+  <h2>Market Overview</h2>
+  <table class="table table-striped">
     <thead>
     <tr>
-      <th scope="col">Index</th>
-      <th scope="col">YTD</th>
-      <th scope="col">Today</th>
+      <th>Index</th>
+      <th>YTD</th>
+      <th>1-Day</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <td>S&P500</td>
-      <td style="color:green">22.4&</td>
-      <td style="color:red">-1.2%</td>
-    </tr>
-    <tr>
-      <td>Dow Jones</td>
-      <td style="color:green">15.1%</td>
-      <td style="color:red">-0.3%</td>
+      <td>SP500</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.sp500.YTD < 0, 'positiveReturnTbl': marketData.sp500.YTD >= 0}">{{ marketData.sp500.YTD }}%</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.sp500['1d'] < 0, 'positiveReturnTbl': marketData.sp500['1d'] >= 0}">{{ marketData.sp500['1d'] }}%</td>
     </tr>
     <tr>
       <td>NASDAQ</td>
-      <td style="color:green">16.8%</td>
-      <td style="color:red">-2.7%</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.nasdaq.YTD < 0, 'positiveReturnTbl': marketData.nasdaq.YTD >= 0}">{{ marketData.nasdaq.YTD }}%</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.nasdaq['1d'] < 0, 'positiveReturnTbl': marketData.nasdaq['1d'] >= 0}">{{ marketData.nasdaq['1d'] }}%</td>
+    </tr>
+    <tr>
+      <td>DJI</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.dow_jones.YTD < 0, 'positiveReturnTbl': marketData.dow_jones.YTD >= 0}">{{ marketData.dow_jones.YTD }}%</td>
+      <td [ngClass]="{'negativeReturnTbl': marketData.dow_jones['1d'] < 0, 'positiveReturnTbl': marketData.dow_jones['1d'] >= 0}">{{ marketData.dow_jones['1d'] }}%</td>
     </tr>
     </tbody>
   </table>
