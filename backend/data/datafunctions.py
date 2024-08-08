@@ -57,8 +57,8 @@ def get_stock_performance(ticker, range_list):
         lock.release()
     return performance
 
-# returns a dictionary with fields time_date_list, time_min_list and price_list with correspond to lists of the respective values
-# time_min_list is for intraday chart and has times down to the minuet vs. time_date_list has granularity of day 
+# returns a list of dictionary with fields: close and either time_Min or time_Date depending on granularity of time
+# if period is day = the returned field is time_Min which is formated as YYYY-MM-DD HH:MM
 # period options ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max']
 def get_stock_price_history(ticker, period):
     try:
@@ -67,15 +67,14 @@ def get_stock_price_history(ticker, period):
         if period != '1d':
             price_hist_df = yf_ticker.history(period=period)
             price_hist_df.reset_index(drop=False, inplace=True)
-            dates_list = price_hist_df['Date'].dt.strftime('%Y-%m-%d').to_list()
-            price_list = price_hist_df['Close'].to_list()
-            return {'time_date_list': dates_list, 'time_min_list': None, 'price_list': price_list}
+            price_hist_df['time_Date'] = price_hist_df['Date'].dt.strftime('%Y-%m-%d')
+            return(price_hist_df[['time_Date', 'Close']].to_dict('records'))
+
         else:
             price_hist_df = yf_ticker.history(period=period, interval='1m')
             price_hist_df.reset_index(drop=False, inplace=True)
-            min_list = price_hist_df['Datetime'].dt.strftime('%Y-%m-%d %H:%M').to_list()
-            price_list = price_hist_df['Close'].to_list()
-            return {'time_date_list': None, 'time_min_list': min_list, 'price_list': price_list}
+            price_hist_df['time_Min'] = price_hist_df['Datetime'].dt.strftime('%Y-%m-%d %H:%M')
+            return(price_hist_df[['time_Min', 'Close']].to_dict('records'))
     finally:
         lock.release()
 
