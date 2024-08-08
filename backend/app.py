@@ -69,6 +69,14 @@ def current_holdings_sum():
         'stock': round(stocks_sum, 2)
     })
 
+# returns dictionary with field net_cash_deposits
+@app.route('/netcashdeposits')
+def net_cash_deposits():
+    net_cash_deposits = data_func.fetch_net_cash_deposits()
+    return ({
+        'net_cash_deposits': net_cash_deposits[0]
+    })
+
 # returns list of dictionary of current holdings 
 @app.route('/currentholdings')
 def current_holdings():
