@@ -14,6 +14,19 @@ interface SearchOption {
   ticker: string,
 }
 
+interface PortfolioInstrument {
+  name: string;
+  ticker: string;
+  instrumentType: string;
+  sharesOwned: number;
+  marketValue: number;
+  currentPrice: number;
+  todaysReturns: number;
+  totalReturn: number;
+  p_l: number;
+}
+
+
 @Component({
   selector: 'app-gloal-search',
   standalone: true,
@@ -26,7 +39,18 @@ export class GloalSearchComponent {
   constructor(private searchService: GloalSearchService, private modalService: NgbModal) {}
 
   trade(ticker: string) {
+    let instrument: PortfolioInstrument = {
+      name: '-',
+      ticker: ticker,
+      instrumentType: 'stock',
+      sharesOwned: 0,
+      marketValue: 0,
+      currentPrice: 0,
+      todaysReturns: 0,
+      totalReturn: 0,
+      p_l: 0
+    };
     const modalRef = this.modalService.open(TradingModalComponent);
-    // modalRef.componentInstance.instrument = instrument;
+    modalRef.componentInstance.instrument = instrument;
   }
 }
