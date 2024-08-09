@@ -49,8 +49,8 @@
             <p>Dollar Amount: {{ shares * stockInfo.price }}</p>
           </div>
           <div>
-            <button type="button" class="btn btn-success me-2" (click)="buyInstrument(instrument.instrumentType, instrument.ticker, shares)">Buy</button>
-            <button type="button" class="btn btn-danger" (click)="sellInstrument(instrument.instrumentType, instrument.ticker, shares)">Sell</button>
+            <button type="button" class="btn btn-success me-2" (click)="buyInstrument(instrument.instrumentType, instrument.ticker, shares)" [disabled]="shares * instrument.currentPrice > cashAvailable">Buy</button>
+            <button type="button" class="btn btn-danger" (click)="sellInstrument(instrument.instrumentType, instrument.ticker, shares)" [disabled]="shares > instrument.sharesOwned">Sell</button>
           </div>
         </div>
       </div>

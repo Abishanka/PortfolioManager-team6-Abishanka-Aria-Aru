@@ -32,6 +32,8 @@ export class TradingModalComponent {
   @Input() instrument!: PortfolioInstrument;
   shares: number = 0;
   selectedPeriod: string = '1mo'; // default period
+  cashAvailable: number = 0; // to hold the cash available from shared service
+
 
   public chartOptions: AgChartOptions = {
     data: [],
@@ -47,16 +49,18 @@ export class TradingModalComponent {
   }]
   };
   periods: string[] = ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max'];
-  stockInfo: any = {}; // Add this to hold stock information
+  stockInfo: any = {}; // to hold stock information
 
 
-constructor(private tradingService: TradingModalService, public activeModal: NgbActiveModal, private sharedDataService: SharedDataService) {  }
+  constructor(private tradingService: TradingModalService, public activeModal: NgbActiveModal, private sharedDataService: SharedDataService) {  }
   totalPortfolioValue: number = 0
   ngOnInit(): void {
     this.sharedDataService.cashAvailable.subscribe(data => this.totalPortfolioValue = Number(data.toFixed(3)));
     if (this.instrument) {
       this.updateChart(this.selectedPeriod);
       this.fetchStockInfo();
+      this.sharedDataService.cashAvailable.subscribe(cash => this.cashAvailable = cash); // Get cash available
+
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -66,12 +70,21 @@ constructor(private tradingService: TradingModalService, public activeModal: Ngb
     }
 
   buyInstrument(instrumentType: string, ticker: string, amount: number): void {
+    const totalCost = amount * this.instrument.currentPrice;
+    if (totalCost > this.cashAvailable) {
+      alert('Insufficient cash available to buy the selected amount of stock.');
+      return;
+    }
     console.log(instrumentType, ticker, amount)
     this.tradingService.buyInstrument(instrumentType, ticker, amount).subscribe(response => {
       console.log(response);
     });
   }
   sellInstrument(instrumentType: string, ticker: string, amount: number): void {
+    if (amount > this.instrument.sharesOwned) {
+      alert('Cannot sell more shares than owned.');
+      return;
+    }
     this.tradingService.sellInstrument(instrumentType, ticker, amount).subscribe(response => {
       console.log(response);
     });
