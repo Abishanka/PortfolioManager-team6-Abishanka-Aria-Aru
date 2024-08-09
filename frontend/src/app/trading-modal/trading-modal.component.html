@@ -10,8 +10,9 @@
               <option *ngFor="let period of periods" [value]="period">{{ period }}</option>
             </select>
           </div>
-          <div class="graph-placeholder" style=" height: 195px; border: 1px solid #ddd;">
+          <div class="graph-placeholder" style=" border: 1px solid #ddd;">
             <ag-charts
+              style="display: grid"
               [options]="chartOptions">
             </ag-charts>
           </div>
