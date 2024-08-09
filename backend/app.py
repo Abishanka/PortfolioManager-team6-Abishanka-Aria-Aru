@@ -131,7 +131,10 @@ def portfolio_add_equity(instrumenttype):
         ticker = request.args.get('ticker')
         stock_info = data_func.get_stock_info(ticker)
         price = stock_info['price']
-        data_func.buy_stock(ticker, amount, price)
+        results = data_func.buy_stock(ticker, amount, price)
+        status = results['status']
+        if status == 'Fail':
+            return {'status': 'fail'}
         last_stock_transaction = data_func.fetch_last_transaction('stocks')
         if (last_stock_transaction[2] != ticker and last_stock_transaction[3] != amount):
             return {'status': 'fail',
@@ -161,7 +164,10 @@ def portfolio_del_equity(instrumenttype):
         ticker = request.args.get('ticker')
         stock_info = data_func.get_stock_info(ticker)
         price = stock_info['price']
-        data_func.sell_stock(ticker, amount, price)
+        results = data_func.sell_stock(ticker, amount, price)
+        status = results['status']
+        if status == 'Fail':
+            return {'status': 'fail'}
         last_stock_transaction = data_func.fetch_last_transaction('stocks')
         if (last_stock_transaction[2] != ticker and last_stock_transaction[3] != amount):
             return {'status': 'fail',

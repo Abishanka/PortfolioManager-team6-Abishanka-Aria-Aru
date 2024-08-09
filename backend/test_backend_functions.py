@@ -3,6 +3,7 @@
 from flask_cors import CORS, cross_origin
 from data import datafunctions as data_func
 
+
 #%%
 # TEST CURRENT HOLDINGS
 current_holdings = data_func.fetch_current_holdings()
@@ -14,7 +15,6 @@ for entry in current_holdings:
     instrument_type = entry[1]
     match instrument_type:
         case 'cash':
-            print(type(entry[7]))
             cash_sum += float(entry[7])
         case 'bond':
             bonds_sum += entry[7]
@@ -29,21 +29,25 @@ print ({
 })
 # %%
 # ADD CASH
-amount = 100
-data_func.remove_cash(amount)
+amount = 11000
+data_func.add_cash(amount)
 last_cash_transaction = data_func.fetch_last_transaction('cash')
 print({'status': 'success', 'last_transaction': last_cash_transaction})
 # %%
 ## BUY STOCK
 
-ticker = 'AAPL'
-amount = 8
+ticker = 'MSFT'
+amount = 1
 
 stock_info = data_func.get_stock_info(ticker)
 price = stock_info['price']
 data_func.buy_stock(ticker, amount, price)
 last_stock_transaction = data_func.fetch_last_transaction('stocks')
-print({'status': 'success',
+if (last_stock_transaction[2] != ticker and last_stock_transaction[3] != amount):
+    print ({'status': 'fail',
+            'last_transaction': last_stock_transaction})
+else: 
+    print( {'status': 'success',
             'last_transaction': last_stock_transaction})
 # %%
 ## SELL STOCK
