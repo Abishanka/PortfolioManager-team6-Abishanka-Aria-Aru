@@ -49,7 +49,8 @@ ngOnInit() {
         ],
       };
       this.sharedDataService.updateCashAvailable(data.cash)
-      this.sharedDataService.updatetotalPortfolioValue(data.cash + data.stock + data.bond)
+      console.log(Number((Number(data.stock) + Number(data.bond) + Number(data.cash))))
+      this.sharedDataService.updatetotalPortfolioValue(Number((Number(data.stock) + Number(data.bond) + Number(data.cash))))
     }
   )};
 }

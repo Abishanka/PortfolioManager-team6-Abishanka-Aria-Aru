@@ -20,11 +20,11 @@
                 <td>{{instrument.name}}</td>
                 <td>{{instrument.ticker}}</td>
                 <td>{{instrument.sharesOwned}}</td>
-                <td>{{instrument.marketValue}}</td>
-                <td>{{instrument.currentPrice}}</td>
-                <td [ngClass]="{'negativeReturnTbl': instrument.todaysReturns < 0, 'positiveReturnTbl': instrument.todaysReturns >= 0}">{{instrument.todaysReturns}}</td>
-                <td [ngClass]="{'negativeReturnTbl': instrument.totalReturn < 0, 'positiveReturnTbl': instrument.totalReturn >= 0}">{{instrument.totalReturn}}</td>
-                <td [ngClass]="{'negativeReturnTbl': instrument.p_l < 0, 'positiveReturnTbl': instrument.p_l >= 0}">{{instrument.p_l}}</td>
+                <td>${{instrument.marketValue}}</td>
+                <td>${{instrument.currentPrice}}</td>
+                <td [ngClass]="{'negativeReturnTbl': instrument.todaysReturns < 0, 'positiveReturnTbl': instrument.todaysReturns >= 0}">{{instrument.todaysReturns}}%</td>
+                <td [ngClass]="{'negativeReturnTbl': instrument.totalReturn < 0, 'positiveReturnTbl': instrument.totalReturn >= 0}">{{instrument.totalReturn}}%</td>
+                <td [ngClass]="{'negativeReturnTbl': instrument.p_l < 0, 'positiveReturnTbl': instrument.p_l >= 0}">${{instrument.p_l}}</td>
                 <td><button class="btn btn-primary" (click)="openTradingModal(instrument)">Trade</button></td>
 
             </tr>

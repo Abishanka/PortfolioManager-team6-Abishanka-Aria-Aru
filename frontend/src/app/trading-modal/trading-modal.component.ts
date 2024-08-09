@@ -70,7 +70,7 @@ export class TradingModalComponent {
     }
 
   buyInstrument(instrumentType: string, ticker: string, amount: number): void {
-    const totalCost = amount * this.instrument.currentPrice;
+    const totalCost = amount * this.stockInfo.price;
     if (totalCost > this.cashAvailable) {
       alert('Insufficient cash available to buy the selected amount of stock.');
       return;
@@ -87,7 +87,7 @@ export class TradingModalComponent {
     });
   }
   sellInstrument(instrumentType: string, ticker: string, amount: number): void {
-    if (amount > this.instrument.sharesOwned) {
+    if (amount > this.stockInfo.number_of_shares) {
       alert('Cannot sell more shares than owned.');
       return;
     }

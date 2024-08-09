@@ -26,15 +26,15 @@
                     <tbody>
                         <tr>
                         <td>Shares Owned <br> {{ stockInfo.number_of_shares > 0 ? stockInfo.number_of_shares : '-'}}</td>
-                        <td>Average Cost <br> {{ stockInfo.average_price_paid > 0 ? stockInfo.average_price_paid : '-'}}</td>
-                        <td>52 Week High <br> {{ stockInfo['52-wk-high']}}</td>
+                        <td>Average Cost <br> ${{ stockInfo.average_price_paid > 0 ? stockInfo.average_price_paid : '-'}}</td>
+                        <td>52 Week High <br> ${{ stockInfo['52-wk-high']}}</td>
                         <td>Trailing P/E Ratio <br> {{ stockInfo.trailing_PE}}</td>
                         </tr>
                         <tr>
-                        <td>Profil/Loss <br> ${{ stockInfo.p_l  > 0 ? stockInfo.p_l : '0'}}</td>
-                        <td>% of Portfolio <br> {{ stockInfo.number_of_shares > 0 ? (stockInfo.number_of_shares * stockInfo.average_price_paid / totalPortfolioValue * 100) : '-' }}%</td>
-                        <td>52 Week Low <br> {{ stockInfo['52-wk-low']}}</td>
-                        <td>30-Day Div Yield <br> {{ stockInfo.dividendYield}}</td>
+                        <td>Profit/Loss <br> ${{ stockInfo.p_l  > 0 ? stockInfo.p_l : '0'}}</td>
+                        <td>% of Portfolio <br> {{ stockInfo.number_of_shares > 0 ? ((stockInfo.number_of_shares * stockInfo.average_price_paid / totalPortfolioValue * 100).toFixed(2)) : '-' }}%</td>
+                        <td>52 Week Low <br> ${{ stockInfo['52-wk-low']}}</td>
+                        <td>30-Day Div Yield <br> {{ (stockInfo.dividendYield*100).toFixed(2) }}%</td>
                         </tr>
                     </tbody>
                 </table>
@@ -50,8 +50,8 @@
             <p>Dollar Amount: {{ shares * stockInfo.price }}</p>
           </div>
           <div>
-            <button type="button" class="btn btn-success me-2" (click)="buyInstrument(instrument.instrumentType, instrument.ticker, shares)" [disabled]="shares * instrument.currentPrice > cashAvailable">Buy</button>
-            <button type="button" class="btn btn-danger" (click)="sellInstrument(instrument.instrumentType, instrument.ticker, shares)" [disabled]="shares > instrument.sharesOwned">Sell</button>
+            <button type="button" class="btn btn-success me-2" (click)="buyInstrument(instrument.instrumentType, instrument.ticker, shares)" [disabled]="shares * stockInfo.price > cashAvailable">Buy</button>
+            <button type="button" class="btn btn-danger" (click)="sellInstrument(instrument.instrumentType, instrument.ticker, shares)" [disabled]="shares > stockInfo.number_of_shares">Sell</button>
           </div>
         </div>
       </div>
