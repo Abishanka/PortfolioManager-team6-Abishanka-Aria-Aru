@@ -60,7 +60,7 @@ def current_holdings_sum():
             case 'bond':
                 bonds_sum += entry[7]
             case 'stock':
-                stock_info = data_func.get_stock_info(entry[1])
+                stock_info = data_func.get_stock_info(entry[2])
                 stocks_sum += (float(entry[4])*float(stock_info['price']))
             case _:
                 pass
