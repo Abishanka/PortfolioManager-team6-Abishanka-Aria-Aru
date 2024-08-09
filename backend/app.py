@@ -22,7 +22,7 @@ def portfolio_overview():
         holdings_history_list.append(entry_dict)
     filtered_holdings_history_list = holdings_history_list[::20]
 
-    return jsonify(filtered_holdings_history_list)
+    return jsonify(holdings_history_list)
 
 # call at 4 pm everyday -- saves current value of holdings into holdings_history table
 @app.route('/saveHoldings')
