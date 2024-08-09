@@ -26,6 +26,12 @@ export class FundsComponent {
   depositCash(amount: number): void {
     this.fundsService.depositCash(amount).subscribe(response => {
       console.log(response);
+      if (response.status == 'success') {
+        alert(`Deposited $ ${response.last_transaction[2]} to account`)
+      }
+      else {
+        alert('Failed to deposit cash')
+      }
     });
   }
   withdrawCash(amount: number): void {
@@ -35,6 +41,12 @@ export class FundsComponent {
     }
     this.fundsService.withdrawCash(amount).subscribe(response => {
       console.log(response);
+      if (response.status == 'success') {
+        alert(`Withdrawn $ ${response.last_transaction[2]} from account`)
+      }
+      else {
+        alert('Failed to withdraw cash')
+      }
     });
   }
 
@@ -42,7 +54,3 @@ export class FundsComponent {
     this.activeModal.close();
   }
 }
-
-
-
-

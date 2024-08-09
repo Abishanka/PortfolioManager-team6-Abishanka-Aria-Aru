@@ -76,12 +76,14 @@ export class TradingModalComponent {
       return;
     }
     this.tradingService.buyInstrument(instrumentType, ticker, amount).subscribe(response => {
+      console.log(response);
       if (response.status=='success') {
         alert(`Bought ${response.last_transaction[3]} shares of ${ticker} at $${response.last_transaction[4]} each.`);
       }
       else {
         alert('Trade Failed')
       }
+      // window.location.reload()
     });
   }
   sellInstrument(instrumentType: string, ticker: string, amount: number): void {
@@ -90,13 +92,14 @@ export class TradingModalComponent {
       return;
     }
     this.tradingService.sellInstrument(instrumentType, ticker, amount).subscribe(response => {
+      console.log(response);
       if (response.status=='success') {
         alert(`Sold ${response.last_transaction[3]} shares of ${ticker} at $${response.last_transaction[4]} each.`);
       }
       else {
         alert('Trade Failed')
       }
-      console.log(response);
+      window.location.reload()
     });
   }
 
@@ -125,7 +128,7 @@ export class TradingModalComponent {
 }
 fetchStockInfo(): void {
     console.log(this.instrument.ticker);
-this.tradingService.getStockInfo(this.instrument.ticker).pipe(
+    this.tradingService.getStockInfo(this.instrument.ticker).pipe(
       catchError(error => {
         console.error('Error fetching stock info:', error);
         return of({});
