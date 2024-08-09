@@ -36,7 +36,7 @@ print({'status': 'success', 'last_transaction': last_cash_transaction})
 # %%
 ## BUY STOCK
 
-ticker = 'MSFT'
+ticker = 'SPY'
 amount = 1
 
 stock_info = data_func.get_stock_info(ticker)

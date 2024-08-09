@@ -152,6 +152,10 @@ def createdb():
     VALUES ('cash', 0);
     """ )
     db_conn.commit()
+    db_cursor.execute(f"""
+    SET SQL_SAFE_UPDATES = 0;
+    """ )
+    db_conn.commit()
     
 def fetch_investment_summary():
     pass
