@@ -6,6 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { InvestmentsComponent } from '../investment-graph/investment-graph.component';
 import { FundsModalService } from '../funds-modal.service';
 import { SharedDataService } from '../shared-data.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-funds',
@@ -28,6 +29,10 @@ export class FundsComponent {
     });
   }
   withdrawCash(amount: number): void {
+    if (amount >this.cashAvailable) {
+      alert('Cannot withdraw more cash than owned.');
+      return;
+    }
     this.fundsService.withdrawCash(amount).subscribe(response => {
       console.log(response);
     });
