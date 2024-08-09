@@ -21,6 +21,7 @@ public chartOptions: AgChartOptions = {
 constructor(private graphDataService: InvestmentGraphDataService, private sharedDataService: SharedDataService) {}
 ngOnInit() {
   this.graphDataService.getGraphData().subscribe(data => {
+    console.log(data)
       this.chartOptions = {
         data: [
           { asset: "Stocks", amount: data.stock },
