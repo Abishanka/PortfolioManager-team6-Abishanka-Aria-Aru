@@ -209,7 +209,7 @@ def fetch_net_cash_deposits():
                         ELSE amount
                     END
                 ) AS account_balance
-            FROM transactions;
+            FROM TRANSACTIONS as t JOIN CASH as c ON t.transaction_id = c.transaction_id;
             """)
         results = db_cursor.fetchone()
     finally:
