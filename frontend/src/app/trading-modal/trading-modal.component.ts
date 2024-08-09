@@ -75,10 +75,13 @@ export class TradingModalComponent {
       alert('Insufficient cash available to buy the selected amount of stock.');
       return;
     }
-    console.log(instrumentType, ticker, amount)
     this.tradingService.buyInstrument(instrumentType, ticker, amount).subscribe(response => {
-      alert(`Bought ${amount} shares of ${ticker} at $${this.instrument.currentPrice} each.`);
-      console.log(response);
+      if (response.status=='success') {
+        alert(`Bought ${response.last_transaction[3]} shares of ${ticker} at $${response.last_transaction[4]} each.`);
+      }
+      else {
+        alert('Trade Failed')
+      }
     });
   }
   sellInstrument(instrumentType: string, ticker: string, amount: number): void {
@@ -87,7 +90,12 @@ export class TradingModalComponent {
       return;
     }
     this.tradingService.sellInstrument(instrumentType, ticker, amount).subscribe(response => {
-      alert(`Sold ${amount} shares of ${ticker} at $${this.instrument.currentPrice} each.`);
+      if (response.status=='success') {
+        alert(`Sold ${response.last_transaction[3]} shares of ${ticker} at $${response.last_transaction[4]} each.`);
+      }
+      else {
+        alert('Trade Failed')
+      }
       console.log(response);
     });
   }

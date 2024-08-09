@@ -30,10 +30,10 @@
   <div class ="container py-1" id="static-info">
     <div class="row g-4 row-cols-1 row-cols-lg-3">
       <div class="feature col">
-        <h6 style="display: block; text-align: left;">My Portfolio Overview</h6>
+        <h5 [ngClass]="{'text-success': getPnL() >= 0, 'text-danger': getPnL() < 0}" style="display: block; text-align: left;"  >Total PnL: ${{totalPortfolioValue-netCashDeposits}}</h5>
       </div>
       <div class="feature col">
-        <h6 style="display: block; text-align: center;">Available Funds: ${{cashAvailable}}</h6>
+        <h5 style="display: block; text-align: center;">Available Funds: ${{cashAvailable}}</h5>
       </div>
       <button class="feature col" (click)="openFundsModal()">
         Manage Funds
