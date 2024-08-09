@@ -20,7 +20,7 @@ export class FundsComponent {
   constructor(private fundsService: FundsModalService, public activeModal: NgbActiveModal, private sharedDataService: SharedDataService) {  }
 
   ngOnInit() {
-    this.sharedDataService.cashAvailable.subscribe(data => this.cashAvailable = Number(data.toFixed(3)));
+    this.sharedDataService.cashAvailable.subscribe(data => this.cashAvailable = Number(Number(data).toFixed(3)));
   }
   depositCash(amount: number): void {
     this.fundsService.depositCash(amount).subscribe(response => {

@@ -23,7 +23,7 @@ export class PageComponent {
   constructor(private modalService: NgbModal, private sharedDataService: SharedDataService) { }
 
   ngOnInit() {
-    this.sharedDataService.cashAvailable.subscribe(data => this.cashAvailable = Number(data.toFixed(3)));
+    this.sharedDataService.cashAvailable.subscribe(data => this.cashAvailable = Number(Number(data).toFixed(3)));
   }
   openFundsModal(): void {
     const modalRef = this.modalService.open(FundsComponent);
