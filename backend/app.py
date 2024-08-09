@@ -92,7 +92,7 @@ def current_holdings():
             shares_owned = entry[4]
             market_value = round(shares_owned * stock_info['price'],2)
             todays_return = round((float(stock_info['price']-stock_info['open'])/float(stock_info['open']))*float(100), 2)
-            total_return = round((float(stock_info['price']-avg_price_paid)/float(avg_price_paid))*float(100), 2)
+            total_return = round((float(stock_info['price']-float(avg_price_paid))/float(avg_price_paid))*float(100), 2)
             p_l = round((float(shares_owned) * float(stock_info['price'])) - (float(shares_owned)*float(avg_price_paid)), 2)
             holding_dict = {
                 'ticker': ticker,
