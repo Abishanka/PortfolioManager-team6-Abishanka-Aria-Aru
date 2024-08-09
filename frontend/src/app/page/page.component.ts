@@ -24,6 +24,7 @@ export class PageComponent {
   cashAvailable: number = 0;
   totalPortfolioValue: number = 0;
   netCashDeposits: number = 0;
+  private intervalId: any;
   constructor(private modalService: NgbModal, private sharedDataService: SharedDataService, private pageService: PageService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {

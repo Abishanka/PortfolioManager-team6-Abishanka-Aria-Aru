@@ -1,7 +1,7 @@
 import { Component, PipeTransform } from '@angular/core';
 import { AsyncPipe, LowerCasePipe, CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription, interval } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { NgbHighlight } from '@ng-bootstrap/ng-bootstrap';
 import { HoldingsService } from '../holdings.service';
@@ -31,6 +31,7 @@ interface PortfolioInstrument {
 })
 export class HoldingsComponent {
   portfolioinstruments$!: Observable<PortfolioInstrument[]>;
+  private refreshSubscription!: Subscription;
   
   constructor(private holdingsService: HoldingsService, private modalService: NgbModal) {}
 
@@ -41,6 +42,14 @@ export class HoldingsComponent {
         this.portfolioinstruments$ = of(filteredInstruments);
       }
     );
+    this.refreshSubscription = interval(5000)
+      .pipe(
+        switchMap(() => this.holdingsService.getPortfolio()),
+        map((instruments: PortfolioInstrument[]) => instruments.filter(instrument => instrument.instrumentType === 'stock'))
+      )
+      .subscribe((filteredInstruments: PortfolioInstrument[]) => {
+        this.portfolioinstruments$ = of(filteredInstruments);
+      });
   }
 
   trackByName(index: number, instrument: PortfolioInstrument): string {
