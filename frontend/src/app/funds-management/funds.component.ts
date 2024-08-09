@@ -32,6 +32,7 @@ export class FundsComponent {
       else {
         alert('Failed to deposit cash')
       }
+      window.location.reload()
     });
   }
   withdrawCash(amount: number): void {
@@ -47,6 +48,7 @@ export class FundsComponent {
       else {
         alert('Failed to withdraw cash')
       }
+      window.location.reload()
     });
   }
 

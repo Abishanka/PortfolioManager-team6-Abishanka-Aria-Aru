@@ -38,7 +38,7 @@ export class TradingModalComponent {
   public chartOptions: AgChartOptions = {
     data: [],
     series: [{
-      type: 'line',
+      type: 'area',
       xKey: 'date',
       yKey: 'price',
       xName: 'Date',
@@ -83,7 +83,7 @@ export class TradingModalComponent {
       else {
         alert('Trade Failed')
       }
-      // window.location.reload()
+      window.location.reload()
     });
   }
   sellInstrument(instrumentType: string, ticker: string, amount: number): void {

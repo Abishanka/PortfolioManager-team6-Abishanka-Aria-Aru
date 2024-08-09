@@ -124,7 +124,7 @@ def current_holdings():
 #Add new instrument to Portfolio
 @app.route('/addinstrument/<string:instrumenttype>')
 def portfolio_add_equity(instrumenttype):
-    amount = request.args.get('amount')
+    amount = float(request.args.get('amount'))
     
     if instrumenttype == 'stock':
         # get current stock price
@@ -154,7 +154,7 @@ def portfolio_add_equity(instrumenttype):
 #Remove instrument from Portfolio
 @app.route('/delinstrument/<string:instrumenttype>')
 def portfolio_del_equity(instrumenttype):
-    amount = request.args.get('amount')
+    amount = float(request.args.get('amount'))
     
     if instrumenttype == 'stock':
         # get current stock price
