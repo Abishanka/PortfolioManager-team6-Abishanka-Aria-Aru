@@ -77,6 +77,7 @@ export class TradingModalComponent {
     }
     console.log(instrumentType, ticker, amount)
     this.tradingService.buyInstrument(instrumentType, ticker, amount).subscribe(response => {
+      alert(`Bought ${amount} shares of ${ticker} at $${this.instrument.currentPrice} each.`);
       console.log(response);
     });
   }
@@ -86,6 +87,7 @@ export class TradingModalComponent {
       return;
     }
     this.tradingService.sellInstrument(instrumentType, ticker, amount).subscribe(response => {
+      alert(`Sold ${amount} shares of ${ticker} at $${this.instrument.currentPrice} each.`);
       console.log(response);
     });
   }
