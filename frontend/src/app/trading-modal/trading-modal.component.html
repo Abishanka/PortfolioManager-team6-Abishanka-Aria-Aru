@@ -46,7 +46,7 @@
             <span class="input-group-text">Shares</span>
           </div>
           <div class="mb-3">
-            <p>Dollar Amount: {{ shares * instrument.currentPrice }}</p>
+            <p>Dollar Amount: {{ shares * stockInfo.price }}</p>
           </div>
           <div>
             <button type="button" class="btn btn-success me-2" (click)="buyInstrument(instrument.instrumentType, instrument.ticker, shares)">Buy</button>
