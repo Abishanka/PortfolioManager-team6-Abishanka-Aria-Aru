@@ -30,7 +30,7 @@
   <div class ="container py-1" id="static-info">
     <div class="row g-4 row-cols-1 row-cols-lg-3">
       <div class="feature col">
-        <h5 [ngClass]="{'text-success': getPnL() >= 0, 'text-danger': getPnL() < 0}" style="display: block; text-align: left;"  >Total PnL: ${{totalPortfolioValue-netCashDeposits}}</h5>
+        <h5 [ngClass]="{'text-success': getPnL() >= 0, 'text-danger': getPnL() < 0}" style="display: block; text-align: left;"  >Total P&L: ${{(totalPortfolioValue-netCashDeposits).toFixed(2)}}</h5>
       </div>
       <div class="feature col">
         <h5 style="display: block; text-align: center;">Available Funds: ${{cashAvailable}}</h5>

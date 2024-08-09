@@ -25,16 +25,16 @@
                 <table class="table table-bordered mt-10">
                     <tbody>
                         <tr>
-                        <td>Shares Owned <br> {{ stockInfo.number_of_shares > 0 ? stockInfo.number_of_shares : '-'}}</td>
-                        <td>Average Cost <br> ${{ stockInfo.average_price_paid > 0 ? stockInfo.average_price_paid : '-'}}</td>
-                        <td>52 Week High <br> ${{ stockInfo['52-wk-high']}}</td>
-                        <td>Trailing P/E Ratio <br> {{ stockInfo.trailing_PE}}</td>
+                        <td>Shares Owned <br> <b>{{ stockInfo.number_of_shares > 0 ? stockInfo.number_of_shares : '-'}}</b></td>
+                        <td>Average Cost <br> <b>${{ stockInfo.average_price_paid > 0 ? stockInfo.average_price_paid : '-'}}</b></td>
+                        <td>52 Week High <br> <b>${{ stockInfo['52-wk-high']}}</b></td>
+                        <td>Trailing P/E Ratio <br> <b>{{ stockInfo.trailing_PE}}</b></td>
                         </tr>
                         <tr>
-                        <td>Profit/Loss <br> ${{ stockInfo.p_l  > 0 ? stockInfo.p_l : '0'}}</td>
-                        <td>% of Portfolio <br> {{ stockInfo.number_of_shares > 0 ? ((stockInfo.number_of_shares * stockInfo.average_price_paid / totalPortfolioValue * 100).toFixed(2)) : '-' }}%</td>
-                        <td>52 Week Low <br> ${{ stockInfo['52-wk-low']}}</td>
-                        <td>30-Day Div Yield <br> {{ (stockInfo.dividendYield*100).toFixed(2) }}%</td>
+                        <td>Profit/Loss <br> <b>${{ stockInfo.p_l  > 0 ? stockInfo.p_l : '0'}}</b></td>
+                        <td>% of Portfolio <br> <b>{{ stockInfo.number_of_shares > 0 ? ((stockInfo.number_of_shares * stockInfo.average_price_paid / totalPortfolioValue * 100).toFixed(2)) : '-' }}%</b></td>
+                        <td>52 Week Low <br> <b>${{ stockInfo['52-wk-low']}}</b></td>
+                        <td>30-Day Div Yield <br> <b>{{ (stockInfo.dividendYield*100).toFixed(2) }}%</b></td>
                         </tr>
                     </tbody>
                 </table>
@@ -47,7 +47,7 @@
             <span class="input-group-text">Shares</span>
           </div>
           <div class="mb-3">
-            <p>Dollar Amount: {{ shares * stockInfo.price }}</p>
+            <p>Dollar Amount: <b>${{ shares * stockInfo.price }}</b></p>
           </div>
           <div>
             <button type="button" class="btn btn-success me-2" (click)="buyInstrument(instrument.instrumentType, instrument.ticker, shares)" [disabled]="shares * stockInfo.price > cashAvailable">Buy</button>

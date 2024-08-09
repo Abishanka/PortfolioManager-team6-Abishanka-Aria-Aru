@@ -28,13 +28,11 @@ export class PerformanceGraphComponent implements OnInit {
 
   ngOnInit() {
     this.graphDataService.getGraphData().subscribe(data => {
-      console.log(data);
       const formattedData = data.map((item: GraphData) => ({
         ...item,
         date: new Date(item.date),
         total: Number(item.total)
       }));
-      console.log(formattedData)
       this.chartOptions = {
         data: formattedData,
         series: [
@@ -56,7 +54,6 @@ export class PerformanceGraphComponent implements OnInit {
           }
         ]
       };
-      console.log(this.chartOptions);
     });
   }
 }
