@@ -295,8 +295,8 @@ def buy_stock(ticker, num_shares, price):
         # updates values in holding table 
         db_cursor.execute(f"""
         UPDATE current_holdings
-        SET number_of_shares = {num_shares} + number_of_shares,
-            average_price_paid = ((number_of_shares*average_price_paid) + ({num_shares}*{price}))/({num_shares}+number_of_shares)
+        SET average_price_paid = ((number_of_shares*average_price_paid) + ({num_shares}*{price}))/({num_shares}+number_of_shares),
+            number_of_shares = {num_shares} + number_of_shares,
         WHERE ticker = '{ticker}';
         """)
         db_conn.commit()
