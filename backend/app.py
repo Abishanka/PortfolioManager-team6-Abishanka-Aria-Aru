@@ -56,7 +56,7 @@ def current_holdings_sum():
     for entry in current_holdings:
         match entry[1]:
             case 'cash':
-                cash_sum += entry[7]
+                cash_sum += float(entry[7])
             case 'bond':
                 bonds_sum += entry[7]
             case 'stock':
@@ -64,7 +64,7 @@ def current_holdings_sum():
             case _:
                 pass
     return ({
-        'cash': round(cash_sum, 2),
+        'cash': round(float(cash_sum), 2),
         'bond': round(bonds_sum, 2),
         'stock': round(stocks_sum, 2)
     })
@@ -91,9 +91,9 @@ def current_holdings():
             stock_info = data_func.get_stock_info(ticker)
             shares_owned = entry[4]
             market_value = round(shares_owned * stock_info['price'],2)
-            todays_return = round(((stock_info['price']-stock_info['open'])/stock_info['open'])*100, 2)
-            total_return = round(((stock_info['price']-avg_price_paid)/avg_price_paid)*100, 2)
-            p_l = round((shares_owned * stock_info['price']) - (shares_owned*avg_price_paid), 2)
+            todays_return = round((float(stock_info['price']-stock_info['open'])/float(stock_info['open']))*float(100), 2)
+            total_return = round((float(stock_info['price']-avg_price_paid)/float(avg_price_paid))*float(100), 2)
+            p_l = round((float(shares_owned) * float(stock_info['price'])) - (float(shares_owned)*float(avg_price_paid)), 2)
             holding_dict = {
                 'ticker': ticker,
                 'instrumentType': instrument_type,

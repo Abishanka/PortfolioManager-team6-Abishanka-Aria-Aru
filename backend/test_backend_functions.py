@@ -14,7 +14,8 @@ for entry in current_holdings:
     instrument_type = entry[1]
     match instrument_type:
         case 'cash':
-            cash_sum += entry[7]
+            print(type(entry[7]))
+            cash_sum += float(entry[7])
         case 'bond':
             bonds_sum += entry[7]
         case 'stock':
@@ -29,7 +30,7 @@ print ({
 # %%
 # ADD CASH
 amount = 100
-data_func.add_cash(amount)
+data_func.remove_cash(amount)
 last_cash_transaction = data_func.fetch_last_transaction('cash')
 print({'status': 'success', 'last_transaction': last_cash_transaction})
 # %%
